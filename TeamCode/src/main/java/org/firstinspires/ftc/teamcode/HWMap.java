@@ -8,19 +8,34 @@ public class HWMap {
     public DcMotor  LeftDrive   = null;
     public DcMotor  RightDrive  = null;
 
+    public DcMotor  Intake  = null;
+    public DcMotor  Outake  = null;
+
+
     public void init(HardwareMap hwMap) {
 
         LeftDrive  = hwMap.get(DcMotor.class, "LeftDrive");
         RightDrive = hwMap.get(DcMotor.class, "RightDrive");
+        Intake = hwMap.get(DcMotor.class, "Intake");
+        Outake = hwMap.get(DcMotor.class, "RightDrive");
 
         LeftDrive.setDirection(DcMotor.Direction.FORWARD);
         RightDrive.setDirection(DcMotor.Direction.REVERSE);
+        Intake.setDirection(DcMotor.Direction.FORWARD);
+        Outake.setDirection(DcMotor.Direction.REVERSE);
+
 
         RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Outake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Outake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         Stop();
 //dfgjkdfgjkdfghjkasdasd
