@@ -1,11 +1,9 @@
-package org.firstinspires.ftc.teamcode.Projects;
+package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-package org.firstinspires.ftc.teamcode;
-
 public class HWMap {
     public DcMotor  LeftDrive   = null;
     public DcMotor  RightDrive  = null;
