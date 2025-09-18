@@ -44,18 +44,12 @@ public class Teleop extends LinearOpMode {
             if (gamepad1.y) {//intake
                 robot.intake.setPower(1);
             }
-            else{
-                robot.intake.setPower(0);
-            }
+            else robot.intake.setPower(0);
+
             if (gamepad1.a) {//outtake
                 robot.outtake.setPower(1);
             }
-            else{
-                robot.outtake.setPower(0);
-            }
-
-
-
+            else robot.outtake.setPower(0);
         }
     }
 }
