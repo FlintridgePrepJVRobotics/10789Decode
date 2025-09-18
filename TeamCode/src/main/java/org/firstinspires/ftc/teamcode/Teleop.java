@@ -51,8 +51,6 @@ public class Teleop extends LinearOpMode {
             }
             else robot.outtake.setPower(0);
 
-
-
         }
     }
 }
