@@ -22,21 +22,28 @@ public class Teleop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
         waitForStart();
-        boolean isSpinning = false;
         double speed = 1;
-        boolean open = true;
-        boolean slowMode = false;
-        boolean slowModeToggle = false;
 
         while (opModeIsActive()) {
 
+            double y = -gamepad1.left_stick_y; // Remember, this is reversed!
+            double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing (suspicious)
+            double rx = -gamepad1.right_stick_x;
 
-            boolean aButtonHeld = false;
-            double rightPower = gamepad1.right_stick_y;
-            double leftPower = gamepad1.left_stick_y;
+            // Denominator is the largest motor power (absolute value) or 1jh
+            // This ensures all the powers maintain the same ratio, but only whenoiajhsdouhjouhjoijqoushdouahsduih
+            // at least one is out of the range [-1, 1]
+            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+            double frontLeftPower = (y + x + rx) / denominator;
+            double backLeftPower = (y - x + rx) / denominator;
+            double frontRightPower = (y - x - rx) / denominator;
+            double backRightPower = (y + x - rx) / denominator;
 
-            robot.rightDrive.setPower(rightPower * speed);
-            robot.leftDrive.setPower(leftPower * speed);
+            robot.frontLeftDrive.setPower(frontLeftPower * speed);
+            robot.backLeftDrive.setPower(backLeftPower * speed);
+            robot.frontRightDrive.setPower(frontRightPower * speed);
+            robot.backRightDrive.setPower(backRightPower * speed);
+
         }
     }
 }
