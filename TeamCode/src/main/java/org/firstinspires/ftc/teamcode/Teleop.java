@@ -1,18 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.exception.RobotCoreException;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.teamcode.HWMap;
-import android.provider.ContactsContract;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.teamcode.HWMap;
 
 @TeleOp(name = "2025Decode10789")
 public class Teleop extends LinearOpMode {
@@ -21,6 +9,7 @@ public class Teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
+
         waitForStart();
         double speed = 1;
 
@@ -50,6 +39,7 @@ public class Teleop extends LinearOpMode {
                 robot.outtake.setPower(1);
             }
             else robot.outtake.setPower(0);
+            }
+
         }
     }
-}
