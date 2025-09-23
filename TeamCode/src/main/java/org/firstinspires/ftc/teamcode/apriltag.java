@@ -69,19 +69,19 @@ public class apriltag extends LinearOpMode {
         }
 
 
-//        while (!isStopRequested () && opModeIsActive()) {
-//            if (!tagProcessor.getDetections().isEmpty()) {
-//                AprilTagDetection tag = tagProcessor.getDetections().get(0);
-//
-//                telemetry.addData("x", tag.ftcPose.x);
-//                telemetry.addData("y", tag.ftcPose.y);
-//                telemetry.addData("z", tag.ftcPose.z);
-//                telemetry.addData("roll", tag.ftcPose.roll);
-//                telemetry.addData("pitch", tag.ftcPose.pitch);
-//                telemetry.addData("yaw", tag.ftcPose.yaw);
-//            }
-//            telemetry.update();
-//        }
+        while (!isStopRequested () && opModeIsActive()) {
+            if (!tagProcessor.getDetections().isEmpty()) {
+                AprilTagDetection tag = tagProcessor.getDetections().get(0);
+
+                telemetry.addData("x", tag.ftcPose.x);
+                telemetry.addData("y", tag.ftcPose.y);
+                telemetry.addData("z", tag.ftcPose.z);
+                telemetry.addData("roll", tag.ftcPose.roll);
+                telemetry.addData("pitch", tag.ftcPose.pitch);
+                telemetry.addData("yaw", tag.ftcPose.yaw);
+            }
+            telemetry.update();
+        }
     }
 
     public void drive(double strafeError, double forwardError, double headingError) {
