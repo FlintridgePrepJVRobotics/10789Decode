@@ -19,7 +19,7 @@ import java.util.List;
 public class apriltag extends LinearOpMode {
 
     // Motors
-//    DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
+    DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
 
     // Vision
     VisionPortal visionPortal;
@@ -51,21 +51,21 @@ public class apriltag extends LinearOpMode {
         while (opModeIsActive()) {
             List<AprilTagDetection> detections = tagProcessor.getDetections();
 
-//            if (gamepad1.a && !detections.isEmpty()) {
-//                AprilTagDetection target = detections.get(0);
-//
-//                double strafeError = target.ftcPose.x;   // cm left/right
-//                double forwardError = target.ftcPose.y;  // cm forward/back
-//                double headingError = target.ftcPose.yaw; // degrees
-//
-//                drive(strafeError, forwardError, headingError);
-//            } else {
-//                // Normal driver control
-//                double forward = -gamepad1.left_stick_y;
-//                double strafe = gamepad1.left_stick_x;
-//                double turn = gamepad1.right_stick_x;
-//                manualDrive(forward, strafe, turn);
-//            }
+            if (gamepad1.a && !detections.isEmpty()) {
+                AprilTagDetection target = detections.get(0);
+
+                double strafeError = target.ftcPose.x;   // cm left/right
+                double forwardError = target.ftcPose.y;  // cm forward/back
+                double headingError = target.ftcPose.yaw; // degrees
+
+                drive(strafeError, forwardError, headingError);
+            } else {
+                // Normal driver control
+                double forward = -gamepad1.left_stick_y;
+                double strafe = gamepad1.left_stick_x;
+                double turn = gamepad1.right_stick_x;
+                manualDrive(forward, strafe, turn);
+            }
 
 
             while (!isStopRequested() && opModeIsActive()) {
@@ -82,46 +82,46 @@ public class apriltag extends LinearOpMode {
                 telemetry.update();
             }
         }
+    }
+        public void drive ( double strafeError, double forwardError, double headingError){
+            double strafePower = strafePID.update(strafeError);
+            double forwardPower = forwardPID.update(forwardError);
+            double turnPower = turnPID.update(headingError);
 
-//    public void drive(double strafeError, double forwardError, double headingError) {
-//        double strafePower = strafePID.update(strafeError);
-//        double forwardPower = forwardPID.update(forwardError);
-//        double turnPower = turnPID.update(headingError);
-//
-//        double fl = forwardPower + strafePower + turnPower;
-//        double fr = forwardPower - strafePower - turnPower;
-//        double bl = forwardPower - strafePower + turnPower;
-//        double br = forwardPower + strafePower - turnPower;
-//
-//        double max = Math.max(1.0, Math.max(Math.abs(fl),
-//                Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
-//        fl /= max;
-//        fr /= max;
-//        bl /= max;
-//        br /= max;
-//
-//        frontLeftDrive.setPower(fl);
-//        frontRightDrive.setPower(fr);
-//        backLeftDrive.setPower(bl);
-//        backRightDrive.setPower(br);
-//    }
-//
-//    public void manualDrive(double forward, double strafe, double turn) {
-//        double fl = forward + strafe + turn;
-//        double fr = forward - strafe - turn;
-//        double bl = forward - strafe + turn;
-//        double br = forward + strafe - turn;
-//
-//        double max = Math.max(1.0, Math.max(Math.abs(fl),
-//                Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
-//        fl /= max;
-//        fr /= max;
-//        bl /= max;
-//        br /= max;
-//
-//        frontLeftDrive.setPower(fl);
-//        frontRightDrive.setPower(fr);
-//        backLeftDrive.setPower(bl);
-//        backRightDrive.setPower(br);
+            double fl = forwardPower + strafePower + turnPower;
+            double fr = forwardPower - strafePower - turnPower;
+            double bl = forwardPower - strafePower + turnPower;
+            double br = forwardPower + strafePower - turnPower;
+
+            double max = Math.max(1.0, Math.max(Math.abs(fl),
+                    Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
+            fl /= max;
+            fr /= max;
+            bl /= max;
+            br /= max;
+
+            frontLeftDrive.setPower(fl);
+            frontRightDrive.setPower(fr);
+            backLeftDrive.setPower(bl);
+            backRightDrive.setPower(br);
+        }
+
+        public void manualDrive ( double forward, double strafe, double turn){
+            double fl = forward + strafe + turn;
+            double fr = forward - strafe - turn;
+            double bl = forward - strafe + turn;
+            double br = forward + strafe - turn;
+
+            double max = Math.max(1.0, Math.max(Math.abs(fl),
+                    Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
+            fl /= max;
+            fr /= max;
+            bl /= max;
+            br /= max;
+
+            frontLeftDrive.setPower(fl);
+            frontRightDrive.setPower(fr);
+            backLeftDrive.setPower(bl);
+            backRightDrive.setPower(br);
         }
     }
