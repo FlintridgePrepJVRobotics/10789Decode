@@ -39,6 +39,12 @@ public class Teleop extends LinearOpMode {
                 robot.outtake.setPower(1);
             }
             else robot.outtake.setPower(0);
+
+            if (gamepad1.right_bumper) {
+                robot.servo.setPosition(1);
+            }
+            else robot.servo.setPosition(0);
+
             }
 
         }

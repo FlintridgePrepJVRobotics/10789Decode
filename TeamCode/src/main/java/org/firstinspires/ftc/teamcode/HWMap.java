@@ -11,6 +11,7 @@ public class HWMap {
     public DcMotor backRightDrive = null;
     public DcMotor  intake  = null;
     public DcMotor  outtake  = null;
+    public Servo servo = null;
 
 //fyguhigftgyhugftvgy
     public void init(HardwareMap hwMap) {
@@ -21,6 +22,7 @@ public class HWMap {
         backRightDrive = hwMap.get(DcMotor.class, "backRightDrive");
         intake = hwMap.get(DcMotor.class, "intake");
         outtake = hwMap.get(DcMotor.class, "outtake");
+        servo = hwMap.get(Servo.class, "servo");
 
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -54,6 +56,7 @@ public class HWMap {
         backRightDrive.setPower(0);
         intake.setPower(0);
         outtake.setPower(0);
+        servo.setPosition(0);
     }
 
 }
