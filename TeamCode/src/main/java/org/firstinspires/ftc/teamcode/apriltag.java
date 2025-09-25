@@ -83,45 +83,46 @@ public class apriltag extends LinearOpMode {
             }
         }
     }
-        public void drive ( double strafeError, double forwardError, double headingError){
-            double strafePower = strafePID.update(strafeError);
-            double forwardPower = forwardPID.update(forwardError);
-            double turnPower = turnPID.update(headingError);
 
-            double fl = forwardPower + strafePower + turnPower;
-            double fr = forwardPower - strafePower - turnPower;
-            double bl = forwardPower - strafePower + turnPower;
-            double br = forwardPower + strafePower - turnPower;
+    public void drive(double strafeError, double forwardError, double headingError) {
+        double strafePower = strafePID.update(strafeError);
+        double forwardPower = forwardPID.update(forwardError);
+        double turnPower = turnPID.update(headingError);
 
-            double max = Math.max(1.0, Math.max(Math.abs(fl),
-                    Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
-            fl /= max;
-            fr /= max;
-            bl /= max;
-            br /= max;
+        double fl = forwardPower + strafePower + turnPower;
+        double fr = forwardPower - strafePower - turnPower;
+        double bl = forwardPower - strafePower + turnPower;
+        double br = forwardPower + strafePower - turnPower;
 
-            frontLeftDrive.setPower(fl);
-            frontRightDrive.setPower(fr);
-            backLeftDrive.setPower(bl);
-            backRightDrive.setPower(br);
-        }
+        double max = Math.max(1.0, Math.max(Math.abs(fl),
+                Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
+        fl /= max;
+        fr /= max;
+        bl /= max;
+        br /= max;
 
-        public void manualDrive ( double forward, double strafe, double turn){
-            double fl = forward + strafe + turn;
-            double fr = forward - strafe - turn;
-            double bl = forward - strafe + turn;
-            double br = forward + strafe - turn;
-
-            double max = Math.max(1.0, Math.max(Math.abs(fl),
-                    Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
-            fl /= max;
-            fr /= max;
-            bl /= max;
-            br /= max;
-
-            frontLeftDrive.setPower(fl);
-            frontRightDrive.setPower(fr);
-            backLeftDrive.setPower(bl);
-            backRightDrive.setPower(br);
-        }
+        frontLeftDrive.setPower(fl);
+        frontRightDrive.setPower(fr);
+        backLeftDrive.setPower(bl);
+        backRightDrive.setPower(br);
     }
+
+    public void manualDrive(double forward, double strafe, double turn) {
+        double fl = forward + strafe + turn;
+        double fr = forward - strafe - turn;
+        double bl = forward - strafe + turn;
+        double br = forward + strafe - turn;
+
+        double max = Math.max(1.0, Math.max(Math.abs(fl),
+                Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
+        fl /= max;
+        fr /= max;
+        bl /= max;
+        br /= max;
+
+        frontLeftDrive.setPower(fl);
+        frontRightDrive.setPower(fr);
+        backLeftDrive.setPower(bl);
+        backRightDrive.setPower(br);
+    }
+}
