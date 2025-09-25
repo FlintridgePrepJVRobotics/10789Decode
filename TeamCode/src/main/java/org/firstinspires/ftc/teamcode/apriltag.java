@@ -34,14 +34,14 @@ public class apriltag extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
+        tagProcessor = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
                 .setDrawCubeProjection(true)
                 .setDrawCubeProjection(true)
                 .setDrawTagOutline(true)
                 .build();
 
-        VisionPortal visionPortal = new VisionPortal.Builder()
+        visionPortal = new VisionPortal.Builder()
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
