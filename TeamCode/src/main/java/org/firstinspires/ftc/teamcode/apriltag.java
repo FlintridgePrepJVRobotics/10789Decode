@@ -30,10 +30,10 @@ public class apriltag extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Map hardware
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");
-        backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
 
         // Reverse right side so robot drives forward correctly
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
