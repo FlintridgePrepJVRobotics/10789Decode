@@ -94,8 +94,7 @@ public class apriltag extends LinearOpMode {
         double bl = forwardPower - strafePower + turnPower;
         double br = forwardPower + strafePower - turnPower;
 
-        double max = Math.max(1.0, Math.max(Math.abs(fl),
-                Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
+        double max = Math.max(1.0, Math.max(Math.abs(fl), Math.max(Math.abs(fr), Math.max(Math.abs(bl), Math.abs(br)))));
         fl /= max;
         fr /= max;
         bl /= max;
