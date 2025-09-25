@@ -10,10 +10,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.firstinspires.ftc.teamcode.PIDController;
+
 import java.util.List;
-
-
 
 @TeleOp
 public class apriltag extends LinearOpMode {
@@ -29,14 +27,21 @@ public class apriltag extends LinearOpMode {
     PIDController forwardPID = new PIDController(0.05, 0, 0.002);
     PIDController turnPID = new PIDController(0.01, 0, 0.001);
 
-    public HWMap robot = new HWMap();
-
     @Override
     public void runOpMode() throws InterruptedException {
+        // Map hardware
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
 
+        // Reverse right side so robot drives forward correctly
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        // Vision setup
         tagProcessor = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
-                .setDrawCubeProjection(true)
                 .setDrawCubeProjection(true)
                 .setDrawTagOutline(true)
                 .build();
@@ -48,39 +53,37 @@ public class apriltag extends LinearOpMode {
                 .build();
 
         waitForStart();
+
         while (opModeIsActive()) {
             List<AprilTagDetection> detections = tagProcessor.getDetections();
 
             if (gamepad1.a && !detections.isEmpty()) {
                 AprilTagDetection target = detections.get(0);
 
-                double strafeError = target.ftcPose.x;   // cm left/right
-                double forwardError = target.ftcPose.y;  // cm forward/back
+                double strafeError = target.ftcPose.x;    // cm left/right
+                double forwardError = target.ftcPose.y;   // cm forward/back
                 double headingError = target.ftcPose.yaw; // degrees
 
                 drive(strafeError, forwardError, headingError);
             } else {
-                // Normal driver control
+                // Manual control
                 double forward = -gamepad1.left_stick_y;
                 double strafe = gamepad1.left_stick_x;
                 double turn = gamepad1.right_stick_x;
                 manualDrive(forward, strafe, turn);
             }
 
-
-            while (!isStopRequested() && opModeIsActive()) {
-                if (!tagProcessor.getDetections().isEmpty()) {
-                    AprilTagDetection tag = tagProcessor.getDetections().get(0);
-
-                    telemetry.addData("x", tag.ftcPose.x);
-                    telemetry.addData("y", tag.ftcPose.y);
-                    telemetry.addData("z", tag.ftcPose.z);
-                    telemetry.addData("roll", tag.ftcPose.roll);
-                    telemetry.addData("pitch", tag.ftcPose.pitch);
-                    telemetry.addData("yaw", tag.ftcPose.yaw);
-                }
-                telemetry.update();
+            // Telemetry for debugging
+            if (!detections.isEmpty()) {
+                AprilTagDetection tag = detections.get(0);
+                telemetry.addData("x", tag.ftcPose.x);
+                telemetry.addData("y", tag.ftcPose.y);
+                telemetry.addData("z", tag.ftcPose.z);
+                telemetry.addData("roll", tag.ftcPose.roll);
+                telemetry.addData("pitch", tag.ftcPose.pitch);
+                telemetry.addData("yaw", tag.ftcPose.yaw);
             }
+            telemetry.update();
         }
     }
 
