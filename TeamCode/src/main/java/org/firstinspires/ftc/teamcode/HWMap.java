@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class HWMap {
-    public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheel, outtake;
+    public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo;
     private DcMotor[] motors;
 
     public void init(HardwareMap hwMap) {
@@ -14,18 +14,18 @@ public class HWMap {
         frontRightDrive = hwMap.get(DcMotor.class, "frontRightDrive");
         backLeftDrive   = hwMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive  = hwMap.get(DcMotor.class, "backRightDrive");
-        flywheel        = hwMap.get(DcMotor.class, "flywheel");
-        outtake         = hwMap.get(DcMotor.class, "outtake");
+        flywheelOne        = hwMap.get(DcMotor.class, "flywheel");
+        flywheelTwo         = hwMap.get(DcMotor.class, "outtake");
 
-        motors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheel, outtake};
+        motors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo};
 
         // Set directions
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        flywheel.setDirection(DcMotor.Direction.FORWARD);
-        outtake.setDirection(DcMotor.Direction.REVERSE);
+        flywheelOne.setDirection(DcMotor.Direction.FORWARD);
+        flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
 
         // Apply zero power behavior to all
         for (DcMotor motor : motors) {
