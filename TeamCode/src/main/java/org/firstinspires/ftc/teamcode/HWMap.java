@@ -14,12 +14,12 @@ public class HWMap {
         frontRightDrive = hwMap.get(DcMotor.class, "frontRightDrive");
         backLeftDrive   = hwMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive  = hwMap.get(DcMotor.class, "backRightDrive");
-        flywheelOne        = hwMap.get(DcMotor.class, "flywheel");
-        flywheelTwo         = hwMap.get(DcMotor.class, "outtake");
+        flywheelOne        = hwMap.get(DcMotor.class, "flywheelOne");
+        flywheelTwo         = hwMap.get(DcMotor.class, "flywheelTwo");
 
         motors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo};
 
-        // Set directions
+        //directions
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -27,7 +27,7 @@ public class HWMap {
         flywheelOne.setDirection(DcMotor.Direction.FORWARD);
         flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
 
-        // Apply zero power behavior to all
+        //zero power behavior
         for (DcMotor motor : motors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
