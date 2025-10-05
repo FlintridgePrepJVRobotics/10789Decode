@@ -56,8 +56,8 @@ public class apriltag extends LinearOpMode {
             if (gamepad1.a && !detections.isEmpty()) {
                 AprilTagDetection target = detections.get(0);
 
-                double strafeError = target.ftcPose.x;    // cm left/right
-                double forwardError = target.ftcPose.y;   // cm forward/back
+                double strafeError = target.ftcPose.x;    // cm left / right
+                double forwardError = target.ftcPose.y;   // cm forward / back
                 double headingError = target.ftcPose.yaw; // degrees
                 double distanceToTag = target.ftcPose.z; // cm distance
 
@@ -72,7 +72,6 @@ public class apriltag extends LinearOpMode {
                 double turn = gamepad1.right_stick_x;
                 manualDrive(forward, strafe, turn);
             }
-
 
             // Telemetry for debugging
             if (!detections.isEmpty()) {
@@ -145,5 +144,4 @@ public class apriltag extends LinearOpMode {
         telemetry.addData("Flywheel Power", power);
         telemetry.addData("Target Distance", distanceCm);
     }
-
 }
