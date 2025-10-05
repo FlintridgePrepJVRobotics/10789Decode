@@ -63,7 +63,7 @@ public class apriltag extends LinearOpMode {
 
                 drive(strafeError, forwardError, headingError);
 
-                spool(distanceToTag);
+                spool(distanceToTag); // flywheel power based on distance
 
             } else {
                 // Manual control
