@@ -14,8 +14,8 @@ public class HWMap {
         frontRightDrive = hwMap.get(DcMotor.class, "frontRightDrive");
         backLeftDrive   = hwMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive  = hwMap.get(DcMotor.class, "backRightDrive");
-        flywheelOne        = hwMap.get(DcMotor.class, "flywheelOne");
-        flywheelTwo         = hwMap.get(DcMotor.class, "flywheelTwo");
+        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
+        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
 
         motors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo};
 

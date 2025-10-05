@@ -1,23 +1,26 @@
 package org.firstinspires.ftc.teamcode;
-
 import android.util.Size;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
 import java.util.List;
 
 @TeleOp
 public class apriltag extends LinearOpMode {
-
-    // Motors
+    public HWMap robot = new HWMap();
+    // Drive motors
     DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
+
+    // Launch motors
+    DcMotor flywheelOne, flywheelTwo;
+
+    // Flywheel tuning
+    double flywheelBasePower = 0.002;  // scaling factor for distance → power
+    double flywheelTuning = 1.0;       // modifier for quick tuning
 
     // Vision
     VisionPortal visionPortal;
@@ -30,14 +33,7 @@ public class apriltag extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Map hardware
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
-
-        // Reverse right side so robot drives forward correctly
-        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        robot.init(hardwareMap);
 
         // Vision setup
         tagProcessor = new AprilTagProcessor.Builder()
@@ -63,8 +59,12 @@ public class apriltag extends LinearOpMode {
                 double strafeError = target.ftcPose.x;    // cm left/right
                 double forwardError = target.ftcPose.y;   // cm forward/back
                 double headingError = target.ftcPose.yaw; // degrees
+                double distanceToTag = target.ftcPose.z; // cm distance
 
                 drive(strafeError, forwardError, headingError);
+
+                spool(distanceToTag);
+
             } else {
                 // Manual control
                 double forward = -gamepad1.left_stick_y;
@@ -72,6 +72,7 @@ public class apriltag extends LinearOpMode {
                 double turn = gamepad1.right_stick_x;
                 manualDrive(forward, strafe, turn);
             }
+
 
             // Telemetry for debugging
             if (!detections.isEmpty()) {
@@ -127,4 +128,22 @@ public class apriltag extends LinearOpMode {
         backLeftDrive.setPower(bl);
         backRightDrive.setPower(br);
     }
+
+    public void spool(double distanceCm) {
+        // Convert distance to a reasonable motor power
+        double power = distanceCm * flywheelBasePower;
+
+        // Apply tuning multiplier
+        power *= flywheelTuning;
+
+        // Clamp between 0 and 1
+        power = Math.max(0, Math.min(1, power));
+
+        flywheelOne.setPower(power);
+        flywheelTwo.setPower(power);
+
+        telemetry.addData("Flywheel Power", power);
+        telemetry.addData("Target Distance", distanceCm);
+    }
+
 }
