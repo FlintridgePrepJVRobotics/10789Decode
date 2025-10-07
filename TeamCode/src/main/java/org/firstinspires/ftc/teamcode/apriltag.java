@@ -22,6 +22,10 @@ public class apriltag extends LinearOpMode {
     double flywheelBasePower = 0.002;  // scaling factor for distance → power
     double flywheelTuning = 1.0;       // modifier for quick tuning
 
+
+    // Define variables
+    boolean spooled = false;
+
     // Vision
     VisionPortal visionPortal;
     AprilTagProcessor tagProcessor;
@@ -72,6 +76,8 @@ public class apriltag extends LinearOpMode {
                 double turn = gamepad1.right_stick_x;
                 manualDrive(forward, strafe, turn);
             }
+
+            if (gamepad1.y && spooled == true)
 
             // Telemetry for debugging
             if (!detections.isEmpty()) {
@@ -143,5 +149,9 @@ public class apriltag extends LinearOpMode {
 
         telemetry.addData("Flywheel Power", power);
         telemetry.addData("Target Distance", distanceCm);
+
+        boolean spooled = true;
+
+
     }
 }
