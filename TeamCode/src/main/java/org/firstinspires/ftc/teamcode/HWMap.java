@@ -6,29 +6,30 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class HWMap {
-    public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo;
-    private DcMotor[] motors;
+    public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
+//    public DcMotor flywheelOne, flywheelTwo;
+    private DcMotor[] drivemotors;
 
     public void init(HardwareMap hwMap) {
         frontLeftDrive  = hwMap.get(DcMotor.class, "frontLeftDrive");
         frontRightDrive = hwMap.get(DcMotor.class, "frontRightDrive");
         backLeftDrive   = hwMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive  = hwMap.get(DcMotor.class, "backRightDrive");
-        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
-        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
+//        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
+//        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
 
-        motors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo};
+        drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive};
 
         //directions
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        flywheelOne.setDirection(DcMotor.Direction.FORWARD);
-        flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
+//        flywheelOne.setDirection(DcMotor.Direction.FORWARD);
+//        flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
 
         //zero power behavior
-        for (DcMotor motor : motors) {
+        for (DcMotor motor : drivemotors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
@@ -36,7 +37,7 @@ public class HWMap {
     }
 
     public void stopAll() {
-        for (DcMotor motor : motors) {
+        for (DcMotor motor : drivemotors) {
             motor.setPower(0);
         }
     }
