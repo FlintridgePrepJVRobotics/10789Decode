@@ -19,10 +19,10 @@ public class FWHWMap {
 //        flywheelTwo.setDirection(DcMotor.Direction.FORWARD);
 
 
-        //zero power behavior
-        for (DcMotor motor : motors) {
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
+//        //zero power behavior
+//        for (DcMotor motor : motors) {
+//            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        }
 
         stopAll();
     }
