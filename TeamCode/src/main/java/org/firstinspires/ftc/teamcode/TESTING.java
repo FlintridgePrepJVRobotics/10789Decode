@@ -25,7 +25,7 @@ public class TESTING extends LinearOpMode {
             if (gamepad1.b) {
                 flywheel.flywheelOne.setPower(-1);
             }
-            else{
+            if (gamepad1.x){
                 flywheel.flywheelOne.setPower(0);
             }
 
