@@ -8,21 +8,21 @@ public class FWHWMap {
 
     public void init(HardwareMap flywheelHWMap) {
         flywheelOne  = flywheelHWMap.get(DcMotor.class, "flywheelOne");
-//        flywheelTwo  = flywheelHWMap.get(DcMotor.class, "flywheelTwo");
+        flywheelTwo  = flywheelHWMap.get(DcMotor.class, "flywheelTwo");
 //        feedServo = FWHWmap.get(Servo.class, "clawServo");
 
 
-        motors = new DcMotor[]{flywheelOne}; //, flywheelTwo};
+        motors = new DcMotor[]{flywheelOne, flywheelTwo};
 
         //directions
         flywheelOne.setDirection(DcMotor.Direction.FORWARD);
-//        flywheelTwo.setDirection(DcMotor.Direction.FORWARD);
+        flywheelTwo.setDirection(DcMotor.Direction.FORWARD);
 
 
-//        //zero power behavior
-//        for (DcMotor motor : motors) {
-//            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        }
+       //zero power behavior
+        for (DcMotor motor : motors) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
 
         stopAll();
     }
