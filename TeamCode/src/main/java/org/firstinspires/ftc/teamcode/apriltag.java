@@ -16,7 +16,7 @@ public class apriltag extends LinearOpMode {
     DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
 
     // Launch motors
-    DcMotor flywheelOne, flywheelTwo;
+//    DcMotor flywheelOne, flywheelTwo;
 
     // Flywheel tuning
     double flywheelBasePower = 0.002;  // scaling factor for distance → power
@@ -77,9 +77,9 @@ public class apriltag extends LinearOpMode {
                 manualDrive(forward, strafe, turn);
             }
 
-            if (gamepad1.y && spooled == true){
-                robot.feedServo.setPosition(0);
-            }
+//            if (gamepad1.y && spooled == true){
+//                robot.feedServo.setPosition(0);
+//            }
 
             // Telemetry for debugging
             if (!detections.isEmpty()) {
@@ -146,8 +146,8 @@ public class apriltag extends LinearOpMode {
         // Clamp between 0 and 1
         power = Math.max(0, Math.min(1, power));
 
-        flywheelOne.setPower(power);
-        flywheelTwo.setPower(power);
+//        flywheelOne.setPower(power);
+//        flywheelTwo.setPower(power);
 
         telemetry.addData("Flywheel Power", power);
         telemetry.addData("Target Distance", distanceCm);
