@@ -30,6 +30,18 @@ public class Teleop extends LinearOpMode {
             robot.frontRightDrive.setPower(frontRightPower * speed);
             robot.backRightDrive.setPower(backRightPower * speed);
 
+            if (gamepad1.dpad_left){
+                robot.frontLeftDrive.setPower(1);
+            }
+            if (gamepad1.dpad_right){
+                robot.frontRightDrive.setPower(1);
+            }
+            if (gamepad1.dpad_up){
+                robot.backLeftDrive.setPower(1);
+            }
+            if (gamepad1.dpad_down){
+                robot.backRightDrive.setPower(1);
+            }
 //            if (gamepad1.y) {//intake
 //                robot.flywheelOne.setPower(1);
 //                robot.flywheelTwo.setPower(-1);
