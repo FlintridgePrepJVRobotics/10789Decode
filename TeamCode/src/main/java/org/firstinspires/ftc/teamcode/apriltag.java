@@ -12,8 +12,10 @@ import java.util.List;
 @TeleOp
 public class apriltag extends LinearOpMode {
     public HWMap robot = new HWMap();
+    public FWHWMap outtake = new FWHWMap();
     // Drive motors
     DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
+    DcMotor flywheelOne, flywheelTwo;
 
     // Launch motors
 //    DcMotor flywheelOne, flywheelTwo;
@@ -38,6 +40,7 @@ public class apriltag extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Map hardware
         robot.init(hardwareMap);
+        outtake.init(hardwareMap);
 
         // Vision setup
         tagProcessor = new AprilTagProcessor.Builder()
@@ -77,9 +80,9 @@ public class apriltag extends LinearOpMode {
                 manualDrive(forward, strafe, turn);
             }
 
-//            if (gamepad1.y && spooled == true){
-//                robot.feedServo.setPosition(0);
-//            }
+            if (gamepad1.y && spooled == true){
+                outtake.feedServo.setPosition(0);
+            }
 
             // Telemetry for debugging
             if (!detections.isEmpty()) {
@@ -146,8 +149,8 @@ public class apriltag extends LinearOpMode {
         // Clamp between 0 and 1
         power = Math.max(0, Math.min(1, power));
 
-//        flywheelOne.setPower(power);
-//        flywheelTwo.setPower(power);
+        flywheelOne.setPower(power);
+        flywheelTwo.setPower(power);
 
         telemetry.addData("Flywheel Power", power);
         telemetry.addData("Target Distance", distanceCm);

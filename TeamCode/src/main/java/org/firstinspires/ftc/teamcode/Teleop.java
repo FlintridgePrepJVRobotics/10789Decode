@@ -5,10 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "2025Decode10789")
 public class Teleop extends LinearOpMode {
     public HWMap robot = new HWMap();
+//    public FWHWMap flywheel = new FWHWMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
+//        flywheel.init(hardwareMap);
 
         waitForStart();
         double speed = 1;
@@ -30,6 +32,7 @@ public class Teleop extends LinearOpMode {
             robot.frontRightDrive.setPower(frontRightPower * speed);
             robot.backRightDrive.setPower(backRightPower * speed);
 
+            //to debug: dpad motor control.
             if (gamepad1.dpad_left){
                 robot.frontLeftDrive.setPower(1);
             }
@@ -43,11 +46,11 @@ public class Teleop extends LinearOpMode {
                 robot.backRightDrive.setPower(1);
             }
 //            if (gamepad1.y) {//intake
-//                robot.flywheelOne.setPower(1);
-//                robot.flywheelTwo.setPower(-1);
+//                flywheel.flywheelOne.setPower(1);
+//                flywheel.flywheelTwo.setPower(-1);
 //            } else {
-//                robot.flywheelOne.setPower(1);
-//                robot.flywheelTwo.setPower(-1);
+//                flywheel.flywheelOne.setPower(0);
+//                flywheel.flywheelTwo.setPower(0);
 //            }
         }
     }

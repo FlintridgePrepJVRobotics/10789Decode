@@ -4,18 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TESTTESTDECODE")
 public class TESTING extends LinearOpMode {
-    public TESTHWMap robot = new TESTHWMap();
+    public FWHWMap flywheel = new FWHWMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        flywheel.init(hardwareMap);
 
         waitForStart();
         double speed = 1;
 
         while (opModeIsActive()) {
             if (gamepad1.a) {//intake
-                robot.Motor1.setPower(1);
+                flywheel.flywheelOne.setPower(1);
+//                flywheel.flywheelTwo.setPower(1);
             }
         }
     }
