@@ -80,9 +80,9 @@ public class apriltag extends LinearOpMode {
                 manualDrive(forward, strafe, turn);
             }
 
-            if (gamepad1.y && spooled == true){
-                outtake.feedServo.setPosition(0);
-            }
+//            if (gamepad1.y && spooled == true){
+//                outtake.feedServo.setPosition(0);
+//            }
 
             // Telemetry for debugging
             if (!detections.isEmpty()) {

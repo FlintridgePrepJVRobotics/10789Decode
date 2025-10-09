@@ -18,6 +18,17 @@ public class TESTING extends LinearOpMode {
                 flywheel.flywheelOne.setPower(1);
 //                flywheel.flywheelTwo.setPower(1);
             }
+            else{
+                flywheel.flywheelOne.setPower(0);
+            }
+
+            if (gamepad1.b) {
+                flywheel.flywheelOne.setPower(-1);
+            }
+            else{
+                flywheel.flywheelOne.setPower(0);
+            }
+
         }
     }
 }
