@@ -20,10 +20,10 @@ public class HWMap {
 //        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
 //        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
 
-        //fl =
-        //fr =
-        //bl =
-        //br =
+        //fl = 0
+        //fr = 1
+        //bl = 2
+        //br = 3
 
 
         drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive};
