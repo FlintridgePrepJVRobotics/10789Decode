@@ -12,13 +12,19 @@ public class HWMap {
     private DcMotor[] drivemotors;
 
     public void init(HardwareMap hwMap) {
-        frontLeftDrive  = hwMap.get(DcMotor.class, "frontLeftDrive");
-        frontRightDrive = hwMap.get(DcMotor.class, "frontRightDrive");
-        backLeftDrive   = hwMap.get(DcMotor.class, "backLeftDrive");
-        backRightDrive  = hwMap.get(DcMotor.class, "backRightDrive");
+        frontLeftDrive  = hwMap.get(DcMotor.class, "FLD");
+        frontRightDrive = hwMap.get(DcMotor.class, "FRD");
+        backLeftDrive   = hwMap.get(DcMotor.class, "BLD");
+        backRightDrive  = hwMap.get(DcMotor.class, "BRD");
 //        feedServo       = hwMap.get(Servo.class, "feedServo")
 //        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
 //        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
+
+        //fl =
+        //fr =
+        //bl =
+        //br =
+
 
         drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive};
 
