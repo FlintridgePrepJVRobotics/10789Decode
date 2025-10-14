@@ -9,7 +9,7 @@ public class FWHWMap {
     public void init(HardwareMap flywheelHWMap) {
         flywheelOne  = flywheelHWMap.get(DcMotor.class, "flywheelOne");
         flywheelTwo  = flywheelHWMap.get(DcMotor.class, "flywheelTwo");
-//        feedServo = FWHWmap.get(Servo.class, "clawServo");
+//        feedServo = flywheelWHWMap.get(Servo.class, "feedServo");
 
 
         motors = new DcMotor[]{flywheelOne, flywheelTwo};
