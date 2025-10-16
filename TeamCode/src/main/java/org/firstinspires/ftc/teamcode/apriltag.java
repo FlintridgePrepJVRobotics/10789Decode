@@ -12,7 +12,7 @@ import java.util.List;
 @TeleOp
 public class apriltag extends LinearOpMode {
     public HWMap robot = new HWMap();
-    public FWHWMap outtake = new FWHWMap();
+//    public FWHWMap outtake = new FWHWMap();
     // Drive motors
     DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
     DcMotor flywheelOne, flywheelTwo;
@@ -40,7 +40,7 @@ public class apriltag extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Map hardware
         robot.init(hardwareMap);
-        outtake.init(hardwareMap);
+//        outtake.init(hardwareMap);
 
         // Vision setup
         tagProcessor = new AprilTagProcessor.Builder()
