@@ -14,7 +14,7 @@ public class auton extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //initialize hardware maphnjhjk
+        //initialize hardware maphnjghjkghjhjk
         robot.init(hardwareMap);
 
         waitForStart();
