@@ -13,9 +13,6 @@ import java.util.List;
 public class apriltag extends LinearOpMode {
     public HWMap robot = new HWMap();
 //    public FWHWMap outtake = new FWHWMap();
-    // Drive motors
-    DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
-    DcMotor flywheelOne, flywheelTwo;
 
     // Launch motors
 //    DcMotor flywheelOne, flywheelTwo;
@@ -114,10 +111,10 @@ public class apriltag extends LinearOpMode {
         bl /= max;
         br /= max;
 
-        frontLeftDrive.setPower(fl);
-        frontRightDrive.setPower(fr);
-        backLeftDrive.setPower(bl);
-        backRightDrive.setPower(br);
+        robot.frontLeftDrive.setPower(fl);
+        robot.frontRightDrive.setPower(fr);
+        robot.backLeftDrive.setPower(bl);
+        robot.backRightDrive.setPower(br);
     }
 
     public void manualDrive(double forward, double strafe, double turn) {
@@ -133,10 +130,10 @@ public class apriltag extends LinearOpMode {
         bl /= max;
         br /= max;
 
-        frontLeftDrive.setPower(fl);
-        frontRightDrive.setPower(fr);
-        backLeftDrive.setPower(bl);
-        backRightDrive.setPower(br);
+        robot.frontLeftDrive.setPower(fl);
+        robot.frontRightDrive.setPower(fr);
+        robot.backLeftDrive.setPower(bl);
+        robot.backRightDrive.setPower(br);
     }
 
     public void spool(double distanceCm) {
