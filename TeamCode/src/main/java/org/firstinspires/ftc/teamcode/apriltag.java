@@ -12,10 +12,7 @@ import java.util.List;
 @TeleOp
 public class apriltag extends LinearOpMode {
     public HWMap robot = new HWMap();
-    public FWHWMap outtake = new FWHWMap();
-    // Drive motors
-    DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
-    DcMotor flywheelOne, flywheelTwo;
+//    public FWHWMap outtake = new FWHWMap();
 
     // Launch motors
 //    DcMotor flywheelOne, flywheelTwo;
@@ -40,7 +37,7 @@ public class apriltag extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Map hardware
         robot.init(hardwareMap);
-        outtake.init(hardwareMap);
+//        outtake.init(hardwareMap);
 
         // Vision setup
         tagProcessor = new AprilTagProcessor.Builder()
@@ -114,10 +111,10 @@ public class apriltag extends LinearOpMode {
         bl /= max;
         br /= max;
 
-        frontLeftDrive.setPower(fl);
-        frontRightDrive.setPower(fr);
-        backLeftDrive.setPower(bl);
-        backRightDrive.setPower(br);
+        robot.frontLeftDrive.setPower(fl);
+        robot.frontRightDrive.setPower(fr);
+        robot.backLeftDrive.setPower(bl);
+        robot.backRightDrive.setPower(br);
     }
 
     public void manualDrive(double forward, double strafe, double turn) {
@@ -133,10 +130,10 @@ public class apriltag extends LinearOpMode {
         bl /= max;
         br /= max;
 
-        frontLeftDrive.setPower(fl);
-        frontRightDrive.setPower(fr);
-        backLeftDrive.setPower(bl);
-        backRightDrive.setPower(br);
+        robot.frontLeftDrive.setPower(fl);
+        robot.frontRightDrive.setPower(fr);
+        robot.backLeftDrive.setPower(bl);
+        robot.backRightDrive.setPower(br);
     }
 
     public void spool(double distanceCm) {

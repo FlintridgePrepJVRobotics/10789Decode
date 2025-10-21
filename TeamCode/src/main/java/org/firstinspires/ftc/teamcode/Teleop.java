@@ -5,12 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "2025Decode10789")
 public class Teleop extends LinearOpMode {
     public HWMap robot = new HWMap();
-//    public FWHWMap flywheel = new FWHWMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
-//        flywheel.init(hardwareMap);
 
         waitForStart();
         double speed = 1;
