@@ -26,7 +26,7 @@ public class HWMap {
         //br = 3
 
 
-        drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive};
+        drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo};
 
         //directions
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);

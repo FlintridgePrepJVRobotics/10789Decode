@@ -4,31 +4,31 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TESTTESTDECODE")
 public class TESTING extends LinearOpMode {
-    public FWHWMap flywheel = new FWHWMap();
+    public HWMap robot = new HWMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        flywheel.init(hardwareMap);
+        robot.init(hardwareMap);
 
         waitForStart();
         double speed = 1;
 
         while (opModeIsActive()) {
             if (gamepad1.a) {//intake
-                flywheel.flywheelOne.setPower(1);
-                flywheel.flywheelTwo.setPower(1);
+                robot.flywheelOne.setPower(1);
+                robot.flywheelTwo.setPower(1);
             }
             else{
-                flywheel.flywheelOne.setPower(0);
+                robot.flywheelOne.setPower(0);
             }
 
             if (gamepad1.b) {
-                flywheel.flywheelOne.setPower(1);
-                flywheel.flywheelTwo.setPower(1);
+                robot.flywheelOne.setPower(1);
+                robot.flywheelTwo.setPower(1);
             }
             if (gamepad1.x){
-                flywheel.flywheelOne.setPower(0);
-                flywheel.flywheelTwo.setPower(0);
+                robot.flywheelOne.setPower(0);
+                robot.flywheelTwo.setPower(0);
             }
 
         }
