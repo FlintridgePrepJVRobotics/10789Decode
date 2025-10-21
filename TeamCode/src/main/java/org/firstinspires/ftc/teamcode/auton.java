@@ -18,11 +18,11 @@ public class auton extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-        forward(2500, 1);
+        forward(2500, 0.4);
         forward(500, 0);
     }
 
-    public void forward(int time, int speed) { //forward
+    public void forward(int time, double speed) { //forward
         robot.backRightDrive.setPower(speed);
         robot.backLeftDrive.setPower(speed);
         robot.frontRightDrive.setPower(speed);
