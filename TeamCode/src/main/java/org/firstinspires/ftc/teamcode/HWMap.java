@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class HWMap {
     public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
-//    public DcMotor flywheelOne, flywheelTwo;
+    public DcMotor flywheelOne, flywheelTwo;
     //public servo feedServo;
     private DcMotor[] drivemotors;
 
@@ -17,8 +17,8 @@ public class HWMap {
         backLeftDrive   = hwMap.get(DcMotor.class, "BLD");
         backRightDrive  = hwMap.get(DcMotor.class, "BRD");
 //        feedServo       = hwMap.get(Servo.class, "feedServo")
-//        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
-//        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
+        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
+        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
 
         //fl = 0
         //fr = 1
@@ -26,7 +26,7 @@ public class HWMap {
         //br = 3
 
 
-        drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive};
+        drivemotors = new DcMotor[]{frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, flywheelOne, flywheelTwo};
 
         //directions
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -34,8 +34,8 @@ public class HWMap {
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
         //feedServo.setPosition(0);
-//        flywheelOne.setDirection(DcMotor.Direction.FORWARD);
-//        flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
+        flywheelOne.setDirection(DcMotor.Direction.FORWARD);
+        flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
 
         //zero power behavior
         for (DcMotor motor : drivemotors) {
