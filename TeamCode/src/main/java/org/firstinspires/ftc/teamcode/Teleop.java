@@ -16,7 +16,7 @@ public class Teleop extends LinearOpMode {
         while (opModeIsActive()) {
 
             double y = -gamepad1.right_stick_y;
-            double x = -gamepad1.right_stick_x * 1.1;
+            double x = gamepad1.right_stick_x * 1.1;
             double rx = gamepad1.left_stick_x;
 
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
@@ -44,7 +44,7 @@ public class Teleop extends LinearOpMode {
 //            }
             if (gamepad1.y) {//intakec
                 robot.flywheelOne.setPower(1);
-                robot.flywheelTwo.setPower(-1);
+                robot.flywheelTwo.setPower(1);
             } else if (gamepad1.a) {
                 robot.flywheelOne.setPower(0);
                 robot.flywheelTwo.setPower(0);
