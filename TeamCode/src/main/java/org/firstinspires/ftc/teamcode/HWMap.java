@@ -47,7 +47,7 @@ public class HWMap {
     public void stopAll() {
         for (DcMotor motor : drivemotors) {
             motor.setPower(0);
-            feedServo.setPosition(0);
+            feedServo.setPosition(1);
         }
     }
 }
