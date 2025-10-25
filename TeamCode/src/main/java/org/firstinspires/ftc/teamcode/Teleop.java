@@ -49,10 +49,10 @@ public class Teleop extends LinearOpMode {
                 robot.flywheelOne.setPower(0);
                 robot.flywheelTwo.setPower(0);
             }
-            if (gamepad1.left_bumper) {
+            if (gamepad1.x) {
                 robot.feedServo.setPosition(0);
             }
-            if (gamepad1.right_bumper) {
+            if (gamepad1.b) {
                 robot.feedServo.setPosition(1);
             }
         }
