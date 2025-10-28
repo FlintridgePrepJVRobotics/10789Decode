@@ -19,7 +19,7 @@ public class auton extends LinearOpMode {
 
         waitForStart();
         forward(2500, 0.4);
-        forward(500, 0);
+        stopall();
     }
 
     public void forward(int time, double speed) { //forward
@@ -29,6 +29,11 @@ public class auton extends LinearOpMode {
         robot.frontLeftDrive.setPower(speed);
         sleep(time);
     }
-
+    public void stopall() { //forward
+        robot.backRightDrive.setPower(0);
+        robot.backLeftDrive.setPower(0);
+        robot.frontRightDrive.setPower(0);
+        robot.frontLeftDrive.setPower(0);
+    }
 
     }
