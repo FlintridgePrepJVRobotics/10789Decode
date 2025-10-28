@@ -7,14 +7,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.HWMap;
 
 //name that appears on the driver hub screen
-@Autonomous(name = "Basic Auto")
+@Autonomous(name = "Drive Forward")
 public class auton extends LinearOpMode {
     //making a robot from project file (hardware map)
     public HWMap robot = new HWMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //initialize hardware maphnjghjkghjhjkgh
+        //initialize hardware map
         robot.init(hardwareMap);
 
         waitForStart();
@@ -36,4 +36,4 @@ public class auton extends LinearOpMode {
         robot.frontLeftDrive.setPower(0);
     }
 
-    }
+}
