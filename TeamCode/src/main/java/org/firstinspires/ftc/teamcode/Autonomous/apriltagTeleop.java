@@ -13,7 +13,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
 @TeleOp
-public class apriltag extends LinearOpMode {
+public class apriltagTeleop extends LinearOpMode {
     public HWMap robot = new HWMap();
     // public FWHWMap outtake = new FWHWMap(); // Assuming this is for flywheel hardware
 
@@ -72,7 +72,7 @@ public class apriltag extends LinearOpMode {
                 double tolerance = 2.0; // cm for distance, degrees for heading
 
                 double strafeError = targetTag.ftcPose.x;
-                double forwardError = targetTag.ftcPose.y - 15; // Target 15cm away from the tag
+                double forwardError = 0; //targetTag.ftcPose.y - 15; // Target 15cm away from the tag
                 double headingError = targetTag.ftcPose.yaw;
 
                 // Stop the robot if it's close enough to the target
