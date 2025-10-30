@@ -31,7 +31,15 @@ public class encoders extends LinearOpMode {
 
         //speed, leftCounts, rightCounts
         encoderDrive (0.5, 1200, 1200, 1200, 1200);
-        encoderDrive (0.5, 200, 0, 200, 0);
+        encoderDrive (0.5, 200, -200, 200, -200);
+        robot.flywheelOne.setPower(1);
+        robot.flywheelTwo.setPower(1);
+        sleep(3000);
+        robot.feedServo.setPosition(1);
+        robot.feedServo.setPosition(0);
+        robot.flywheelOne.setPower(0);
+        robot.flywheelTwo.setPower(0);
+        robot.feedServo.setPosition(0);
 
 
     }
