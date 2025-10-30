@@ -20,7 +20,7 @@ public class HWMap {
         feedServo       = hwMap.get(Servo.class, "feedServo");
         flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
         flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
-        intake          = hwMap.get(DcMotor.class, "intake")
+        intake          = hwMap.get(DcMotor.class, "intake");
 
         //fl = 0
         //fr = 1
