@@ -183,9 +183,8 @@ public class apriltag extends LinearOpMode {
         double power = distanceCm * flywheelBasePower * flywheelTuning;
         power = Math.max(0, Math.min(1, power)); // Clamp power between 0 and 1
 
-        // Uncomment these lines when your flywheel motors are mapped in HWMap
-        // robot.flywheelOne.setPower(power);
-        // robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setPower(power);
+        robot.flywheelTwo.setPower(power);
 
         this.spooled = true; // Set the class-level 'spooled' variable
 
