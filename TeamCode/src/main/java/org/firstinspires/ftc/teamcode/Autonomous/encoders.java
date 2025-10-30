@@ -30,7 +30,8 @@ public class encoders extends LinearOpMode {
         //"blank" encoder counts = 90 degree turn
 
         //speed, leftCounts, rightCounts
-        encoderDrive (1, 200, 200, 200, 200);
+        encoderDrive (0.5, 1200, 1200, 1200, 1200);
+        encoderDrive (0.5, 200, 0, 200, 0);
 
 
     }
