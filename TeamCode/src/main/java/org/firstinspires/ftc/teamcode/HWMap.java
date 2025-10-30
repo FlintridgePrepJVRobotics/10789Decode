@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class HWMap {
     public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
     public DcMotor flywheelOne, flywheelTwo;
+    public DcMotor intake;
     public Servo feedServo;
     private DcMotor[] drivemotors;
 
@@ -19,6 +20,7 @@ public class HWMap {
         feedServo       = hwMap.get(Servo.class, "feedServo");
         flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
         flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
+        intake          = hwMap.get(DcMotor.class, "intake")
 
         //fl = 0
         //fr = 1
@@ -35,6 +37,7 @@ public class HWMap {
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
         flywheelOne.setDirection(DcMotor.Direction.FORWARD);
         flywheelTwo.setDirection(DcMotor.Direction.REVERSE);
+        intake.setDirection(DcMotor.Direction.FORWARD);
 
         //zero power behavior
         for (DcMotor motor : drivemotors) {
