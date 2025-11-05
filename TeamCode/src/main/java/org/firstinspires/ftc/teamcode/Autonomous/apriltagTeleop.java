@@ -15,7 +15,6 @@ import java.util.List;
 @TeleOp
 public class apriltagTeleop extends LinearOpMode {
     public HWMap robot = new HWMap();
-    // public FWHWMap outtake = new FWHWMap(); // Assuming this is for flywheel hardware
 
     // Vision components
     private VisionPortal visionPortal;
