@@ -83,8 +83,6 @@ public class apriltagTeleop extends LinearOpMode {
                     drive(strafeError, forwardError, headingError);
                 }
 
-                spool(targetTag.ftcPose.z); // Spool up the flywheel based on distance
-
             } else {
                 // --- MANUAL CONTROL MODE ---
                 double forward = -gamepad1.right_stick_y;
@@ -94,8 +92,21 @@ public class apriltagTeleop extends LinearOpMode {
                 manualDrive(forward, strafe, turn);
 
                 // Stop the flywheel when not auto-aligning
-                // stopFlywheel(); // Uncomment if you have flywheel motors mapped
-                spooled = false;
+//                stopFlywheel(); // Uncomment if you have flywheel motors mapped
+//                spooled = false;
+            }
+
+            if (gamepad1.right_bumper && !detections.isEmpty()){
+                AprilTagDetection targetTag = detections.get(0);
+                spool(targetTag.ftcPose.z); // Spool up the flywheel based on distance
+            } else{
+                this.spooled = false;
+            }
+
+            if(gamepad1.left_bumper && spooled){
+                robot.feedServo.setPosition(0);
+            } else{
+                robot.feedServo.setPosition(1);
             }
 
             // --- TELEMETRY ---
