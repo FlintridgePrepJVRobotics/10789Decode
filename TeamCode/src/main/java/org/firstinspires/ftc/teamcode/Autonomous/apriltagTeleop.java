@@ -103,9 +103,9 @@ public class apriltagTeleop extends LinearOpMode {
             }
 
             if(gamepad1.left_bumper && spooled){
-                robot.feedServo.setPosition(0);
-            } else{
                 robot.feedServo.setPosition(1);
+            } else{
+                robot.feedServo.setPosition(0);
             }
 
             // --- TELEMETRY ---

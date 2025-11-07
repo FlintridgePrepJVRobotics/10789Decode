@@ -30,8 +30,6 @@ public class apriltagAuto extends LinearOpMode {
     private double flywheelBasePower = 0.002; // Scaling factor for distance → power
     private double flywheelTuning = 1.0;      // Modifier for quick tuning
 
-    // State variable to track if flywheel is ready
-    private boolean spooled = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -61,12 +59,47 @@ public class apriltagAuto extends LinearOpMode {
         // --- MAIN LOOP ---
         while (opModeIsActive()) {
             List<AprilTagDetection> detections = tagProcessor.getDetections();
-            /// /write code here
 
+            /// /write code here do some movement shit ^^^
+            aim();
+
+            AprilTagDetection targetTag = detections.get(0);
+
+            spoolFlywheel(targetTag.ftcPose.y);
+            fire();
+
+            setFlywheel(0);
 
         }
         // Cleanup resources after the loop finishes
         visionPortal.close();
+    }
+
+    public void aim(){
+        List<AprilTagDetection> detections = tagProcessor.getDetections();
+
+        AprilTagDetection targetTag = detections.get(0);
+
+        // Define a tolerance. If the error is within this range, consider it "aligned".
+        double tolerance = 2.0; // cm for distance, degrees for heading
+
+        double strafeError = targetTag.ftcPose.x;
+        double forwardError = 0; //targetTag.ftcPose.y - 15; // Target 15cm away from the tag
+        double headingError = targetTag.ftcPose.yaw;
+
+        // Stop the robot if it's close enough to the target
+        if (Math.abs(strafeError) < tolerance && Math.abs(forwardError) < tolerance && Math.abs(headingError) < tolerance) {
+            stopDriving();
+        } else {
+            // Otherwise, continue driving towards the target
+            drive(strafeError, forwardError, headingError);
+        }
+    }
+
+    public void fire(){
+        robot.feedServo.setPosition(1);
+        sleep(500);
+        robot.feedServo.setPosition(0);
     }
 
     /**
@@ -133,16 +166,19 @@ public class apriltagAuto extends LinearOpMode {
     /**
      * Calculates the required flywheel power based on distance and sets it.
      */
-    public void spool(double distanceCm) {
+    public void spoolFlywheel(double distanceCm) {
         double power = distanceCm * flywheelBasePower * flywheelTuning;
         power = Math.max(0, Math.min(1, power)); // Clamp power between 0 and 1
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
 
-        this.spooled = true; // Set the class-level 'spooled' variable
-
         telemetry.addData("Flywheel Power", power);
         telemetry.addData("Target Distance", distanceCm);
+    }
+
+    public void setFlywheel(double fw){
+        robot.flywheelOne.setPower(fw);
+        robot.flywheelTwo.setPower(fw);
     }
 }
