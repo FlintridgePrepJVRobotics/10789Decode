@@ -43,8 +43,8 @@ public class Teleop extends LinearOpMode {
 //                robot.backRightDrive.setPower(1);
 //            }
             if (gamepad1.y) {//intake
-                robot.flywheelOne.setPower(1);
-                robot.flywheelTwo.setPower(1);
+                robot.flywheelOne.setPower(0.5);
+                robot.flywheelTwo.setPower(0.5);
             } else if (gamepad1.a) {
                 robot.flywheelOne.setPower(0);
                 robot.flywheelTwo.setPower(0);
@@ -62,4 +62,4 @@ public class Teleop extends LinearOpMode {
             }
         }
     }
-}
+}`
