@@ -51,7 +51,7 @@ public class Teleop extends LinearOpMode {
 //            }
             telemetry.addData("flywheel speed", flywheelSpeed);
 
-            if (gamepad1.dpad_up && flywheelSpeed <0.6){
+            if (gamepad1.dpad_up && flywheelSpeed < 0.6){
                 flywheelSpeed = flywheelSpeed + 0.05;
                 sleep(300);
 
