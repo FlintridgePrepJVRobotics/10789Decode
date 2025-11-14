@@ -58,16 +58,11 @@ public class apriltagAuto extends LinearOpMode {
 
         // --- MAIN LOOP ---
         while (opModeIsActive()) {
-            List<AprilTagDetection> detections = tagProcessor.getDetections();
 
             /// /write code here do some movement shit ^^^
             aim();
-
-            AprilTagDetection targetTag = detections.get(0);
-
-            spoolFlywheel(targetTag.ftcPose.y);
+            spoolFlywheel();
             fire();
-
             setFlywheel(0);
 
         }
@@ -166,15 +161,18 @@ public class apriltagAuto extends LinearOpMode {
     /**
      * Calculates the required flywheel power based on distance and sets it.
      */
-    public void spoolFlywheel(double distanceCm) {
-        double power = distanceCm * flywheelBasePower * flywheelTuning;
+    public void spoolFlywheel() {
+        List<AprilTagDetection> detections = tagProcessor.getDetections();
+        AprilTagDetection targetTag = detections.get(0);
+
+        double power = targetTag.ftcPose.y * flywheelBasePower * flywheelTuning;
         power = Math.max(0, Math.min(1, power)); // Clamp power between 0 and 1
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
 
         telemetry.addData("Flywheel Power", power);
-        telemetry.addData("Target Distance", distanceCm);
+        telemetry.addData("Target Distance", targetTag.ftcPose.y);
     }
 
     public void setFlywheel(double fw){

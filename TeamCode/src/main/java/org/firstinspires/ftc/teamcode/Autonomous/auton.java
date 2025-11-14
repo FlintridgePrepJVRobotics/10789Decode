@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HWMap;
 
 //name that appears on the driver hub screen
-@Autonomous(name = "shoot in place")
+@Autonomous(name = "shootinplace")
 public class auton extends LinearOpMode {
     //making a robot from project file (hardware map)
     public HWMap robot = new HWMap();
