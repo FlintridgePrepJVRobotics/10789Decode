@@ -61,14 +61,14 @@ public class Teleop extends LinearOpMode {
                 sleep(300);
             }
 
-            if (gamepad1.left_trigger > 0.2) {//intake
+            if (gamepad1.right_trigger > 0.2) {//flywheel
                 robot.flywheelOne.setPower(flywheelSpeed);
                 robot.flywheelTwo.setPower(flywheelSpeed);
             } else {
                 robot.flywheelOne.setPower(0);
                 robot.flywheelTwo.setPower(0);
             }
-            if (gamepad1.right_trigger > 0.2) {//intake
+            if (gamepad1.left_trigger > 0.2) {//intake
                 robot.intake.setPower(-1);
             } else {
                 robot.intake.setPower(0);
