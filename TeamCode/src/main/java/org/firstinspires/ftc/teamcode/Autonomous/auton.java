@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HWMap;
 
 //name that appears on the driver hub screen
-@Autonomous(name = "shoot in place")
+@Autonomous(name = "shootinplace")
 public class auton extends LinearOpMode {
     //making a robot from project file (hardware map)
     public HWMap robot = new HWMap();
@@ -15,11 +15,11 @@ public class auton extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //initialize hardware map
         robot.init(hardwareMap);
-        robot.flywheelOne.setPower(1);
-        robot.flywheelTwo.setPower(1);
-        sleep(3000);
+        robot.flywheelOne.setPower(0.5);
+        robot.flywheelTwo.setPower(0.5);
+        sleep(6700);
         robot.feedServo.setPosition(1);//do servo programing
-        sleep(1000);
+        sleep(6700);
         robot.flywheelOne.setPower(0);
         robot.flywheelTwo.setPower(0);
         robot.feedServo.setPosition(0);

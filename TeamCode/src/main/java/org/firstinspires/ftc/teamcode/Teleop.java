@@ -12,7 +12,7 @@ public class Teleop extends LinearOpMode {
 
         waitForStart();
         double speed = 1;
-
+        double flywheelSpeed = 0.5;
         while (opModeIsActive()) {
 
             double y = -gamepad1.right_stick_y;
@@ -49,24 +49,40 @@ public class Teleop extends LinearOpMode {
 //                robot.flywheelOne.setPower(0);
 //                robot.flywheelTwo.setPower(0);
 //            }
-            if (gamepad1.left_trigger > 0.2) {//intake
-                robot.flywheelOne.setPower(0.4);
-                robot.flywheelTwo.setPower(0.4);
+            telemetry.addData("flywheel speed", flywheelSpeed);
+
+            if (gamepad1.dpad_up && flywheelSpeed < 0.6){
+                flywheelSpeed = flywheelSpeed + 0.05;
+                sleep(300);
+
+            }
+            if (gamepad1.dpad_down && flywheelSpeed > 0.4){
+                flywheelSpeed = flywheelSpeed - 0.05;
+                sleep(300);
+            }
+
+            if (gamepad1.right_trigger > 0.2) {//flywheel
+                robot.flywheelOne.setPower(flywheelSpeed);
+                robot.flywheelTwo.setPower(flywheelSpeed);
             } else {
                 robot.flywheelOne.setPower(0);
                 robot.flywheelTwo.setPower(0);
             }
-            if (gamepad1.right_trigger > 0.2) {//intake
-                robot.intake.setPower(1);
+            if (gamepad1.left_trigger > 0.2) {//intake
+                robot.intake.setPower(-1);
             } else {
                 robot.intake.setPower(0);
             }
+            if (gamepad1.dpad_right) {//intake
+                robot.intake.setPower(1);
+            }
+
             if (gamepad1.x) {
                 robot.feedServo.setPosition(0);
-            }
-            if (gamepad1.b) {
+            } else {
                 robot.feedServo.setPosition(1);
             }
+            telemetry.update();
         }
     }
 }
