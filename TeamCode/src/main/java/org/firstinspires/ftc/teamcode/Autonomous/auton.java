@@ -15,6 +15,7 @@ public class auton extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //initialize hardware map
         robot.init(hardwareMap);
+        waitForStart();
         robot.flywheelOne.setPower(0.5);
         robot.flywheelTwo.setPower(0.5);
         sleep(6700);
@@ -23,7 +24,6 @@ public class auton extends LinearOpMode {
         robot.flywheelOne.setPower(0);
         robot.flywheelTwo.setPower(0);
         robot.feedServo.setPosition(0);
-        waitForStart();
         forward(6700, 0.4);
         stopall();
     }
