@@ -49,6 +49,7 @@ public class Teleop extends LinearOpMode {
 //                robot.flywheelOne.setPower(0);
 //                robot.flywheelTwo.setPower(0);
 //            }
+            //dfghjkl
             telemetry.addData("flywheel speed", flywheelSpeed);
 
             if (gamepad1.dpad_up && flywheelSpeed < 0.6){
@@ -86,4 +87,3 @@ public class Teleop extends LinearOpMode {
         }
     }
 }
-
