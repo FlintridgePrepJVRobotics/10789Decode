@@ -24,7 +24,7 @@ public class auton extends LinearOpMode {
         robot.flywheelTwo.setPower(0);
         robot.feedServo.setPosition(0);
         waitForStart();
-        forward(2500, 0.4);
+        forward(6700, 0.4);
         stopall();
     }
 
