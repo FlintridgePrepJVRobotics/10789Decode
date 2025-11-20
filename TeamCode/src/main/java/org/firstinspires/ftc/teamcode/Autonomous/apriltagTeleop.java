@@ -21,14 +21,13 @@ public class apriltagTeleop extends LinearOpMode {
     private AprilTagProcessor tagProcessor;
 
     // PID Controllers for auto-alignment
-    // It is recommended to tune these values for your specific robot
     private PIDController strafePID = new PIDController(0.05, 0, 0.002);
     private PIDController forwardPID = new PIDController(0.05, 0, 0.002);
     private PIDController turnPID = new PIDController(0.01, 0, 0.001);
 
-    // Flywheel tuning (assuming these are for a shooter)
-    private double flywheelBasePower = 0.002; // Scaling factor for distance → power
-    private double flywheelTuning = 1.0;      // Modifier for quick tuning
+    // Constants for the linear equation: power = (SLOPE * distance) + INTERCEPT
+    private static final double POWER_SLOPE = 0.00075;
+    private static final double POWER_INTERCEPT = 0.2775;
 
     // State variable to track if flywheel is ready
     private boolean spooled = false;
@@ -37,7 +36,6 @@ public class apriltagTeleop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // --- INITIALIZATION ---
         robot.init(hardwareMap);
-        // outtake.init(hardwareMap);
 
         // Vision setup
         tagProcessor = new AprilTagProcessor.Builder()
@@ -71,11 +69,11 @@ public class apriltagTeleop extends LinearOpMode {
                 double tolerance = 2.0; // cm for distance, degrees for heading
 
                 double strafeError = targetTag.ftcPose.x;
-                double forwardError = 0; //targetTag.ftcPose.y - 15; // Target 15cm away from the tag
+                double forwardError = 0; // Set to 0 to prevent forward/backward movement during alignment
                 double headingError = targetTag.ftcPose.yaw;
 
                 // Stop the robot if it's close enough to the target
-                if (Math.abs(strafeError) < tolerance && Math.abs(forwardError) < tolerance && Math.abs(headingError) < tolerance) {
+                if (Math.abs(strafeError) < tolerance && Math.abs(headingError) < tolerance) {
                     stopDriving();
                 } else {
                     // Otherwise, continue driving towards the target
@@ -89,19 +87,20 @@ public class apriltagTeleop extends LinearOpMode {
                 double turn = gamepad1.left_stick_x;
 
                 manualDrive(forward, strafe, turn);
-
-                // Stop the flywheel when not auto-aligning
-//                stopFlywheel(); // Uncomment if you have flywheel motors mapped
-//                spooled = false;
             }
 
+            // Spool up flywheel when right bumper is held and a tag is visible
             if (gamepad1.right_bumper && !detections.isEmpty()){
                 AprilTagDetection targetTag = detections.get(0);
                 spool(targetTag.ftcPose.z); // Spool up the flywheel based on distance
             } else{
+                // Stop the flywheel if not spooling up
+                robot.flywheelOne.setPower(0);
+                robot.flywheelTwo.setPower(0);
                 this.spooled = false;
             }
 
+            // Activate servo to feed note if flywheel is spooled and left bumper is pressed
             if(gamepad1.left_bumper && spooled){
                 robot.feedServo.setPosition(1);
             } else{
@@ -114,7 +113,8 @@ public class apriltagTeleop extends LinearOpMode {
                 AprilTagDetection tag = detections.get(0);
                 telemetry.addData("Tag ID", tag.id);
                 telemetry.addData("X Error (strafe)", tag.ftcPose.x);
-                telemetry.addData("Y Error (forward)", tag.ftcPose.y);
+                telemetry.addData("Y Distance (forward)", tag.ftcPose.y);
+                telemetry.addData("Z Distance (raw)", tag.ftcPose.z);
                 telemetry.addData("Yaw Error (turn)", tag.ftcPose.yaw);
                 telemetry.addData("Is Spooled", spooled);
             } else {
@@ -189,11 +189,17 @@ public class apriltagTeleop extends LinearOpMode {
     }
 
     /**
-     * Calculates the required flywheel power based on distance and sets it.
+     * Calculates the required flywheel power based on a linear equation derived
+     * from two target points (distance, power).
+     * Point 1: (230cm, 0.45 power)
+     * Point 2: (310cm, 0.51 power)
      */
     public void spool(double distanceCm) {
-        double power = distanceCm * flywheelBasePower * flywheelTuning;
-        power = Math.max(0, Math.min(1, power)); // Clamp power between 0 and 1
+        // Calculate power using the linear equation
+        double power = (POWER_SLOPE * distanceCm) + POWER_INTERCEPT;
+
+        // Clamp power to be within the valid range of [0, 1]
+        power = Math.max(0, Math.min(1.0, power));
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
@@ -201,6 +207,5 @@ public class apriltagTeleop extends LinearOpMode {
         this.spooled = true; // Set the class-level 'spooled' variable
 
         telemetry.addData("Flywheel Power", power);
-        telemetry.addData("Target Distance", distanceCm);
     }
 }
