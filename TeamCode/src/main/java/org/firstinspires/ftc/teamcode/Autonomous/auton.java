@@ -18,9 +18,23 @@ public class auton extends LinearOpMode {
         waitForStart();
         robot.flywheelOne.setPower(0.5);
         robot.flywheelTwo.setPower(0.5);
-        sleep(6700);
-        robot.feedServo.setPosition(1);//do servo programing
-        sleep(6700);
+        sleep(5000);
+        robot.feedServo.setPosition(1);//number 1
+        sleep(2000);
+        robot.feedServo.setPosition(0);
+        sleep(2000);
+        robot.feedServo.setPosition(1);//number 2
+        sleep(2000);
+        robot.feedServo.setPosition(0);
+        sleep(2000);
+
+        robot.intake.setPower(-0.5);
+        sleep(1000);
+        robot.feedServo.setPosition(1);//number 3
+        sleep(2000);
+        robot.feedServo.setPosition(0);
+        sleep(2000);
+
         robot.flywheelOne.setPower(0);
         robot.flywheelTwo.setPower(0);
         robot.feedServo.setPosition(0);
