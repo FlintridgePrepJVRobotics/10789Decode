@@ -17,11 +17,11 @@ public class closeauton extends LinearOpMode {
         robot.init(hardwareMap);// start block
         waitForStart();
 
-        forward(3700,-0.2);
+        forward(5700,-0.2);
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
-        sleep(5000);
+        sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
@@ -37,7 +37,7 @@ public class closeauton extends LinearOpMode {
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
-        sleep(5000);
+        sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
@@ -52,7 +52,7 @@ public class closeauton extends LinearOpMode {
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
-        sleep(5000);
+        sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
