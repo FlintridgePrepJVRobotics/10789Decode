@@ -6,19 +6,22 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HWMap;
 
 //name that appearss on the driver hub screen
-@Autonomous(name = "shootinplace")
-public class auton extends LinearOpMode {
+@Autonomous(name = "closeatuon")
+public class closeauton extends LinearOpMode {
     //making a robot from project file (hardware map)
     public HWMap robot = new HWMap();
-    double power = 0.55;
+    double power = 0.45;
     @Override
     public void runOpMode() throws InterruptedException {
         //initialize hardware map
         robot.init(hardwareMap);// start block
         waitForStart();
+
+        forward(3700,0.2);
+
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
-        sleep(3000);
+        sleep(5000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
@@ -34,7 +37,7 @@ public class auton extends LinearOpMode {
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
-        sleep(3000);
+        sleep(5000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
@@ -49,7 +52,7 @@ public class auton extends LinearOpMode {
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
-        sleep(3000);
+        sleep(5000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
@@ -62,38 +65,6 @@ public class auton extends LinearOpMode {
         sleep(500);
         robot.intake.setPower(0);//end block
 
-
-
-
-
-
-//        forward(250,1);iyt
-//        sleep(500);
-//        forward(250,-1);
-//        robot.feedServo.setPosition(0);//number 2
-//        sleep(3000);
-//        robot.feedServo.setPosition(1);
-//        sleep(3000);
-//        robot.intake.setPower(0.5);
-//        sleep(250);
-//        robot.intake.setPower(-1);
-//        sleep(2000);
-//        forward(250,1); out
-//        sleep(500);
-//        forward(250,-1);
-//        robot.intake.setPower(-0);
-//        sleep(1000);
-//        robot.feedServo.setPosition(0);//number 3
-//        sleep(2000);
-//        robot.flywheelOne.setPower(0);
-//        robot.flywheelTwo.setPower(0);
-//        robot.feedServo.setPosition(0);
-        robot.backRightDrive.setPower(0.7);
-        robot.backLeftDrive.setPower(0.25);
-        robot.frontRightDrive.setPower(0.7);
-        robot.frontLeftDrive.setPower(0.25);
-        sleep(4000);
-        stopall();
     }
 
     public void forward(int time, double speed) { //forward

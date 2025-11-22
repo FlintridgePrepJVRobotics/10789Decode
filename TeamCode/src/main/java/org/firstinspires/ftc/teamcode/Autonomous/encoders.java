@@ -10,6 +10,7 @@ public class encoders extends LinearOpMode {
     //creating robot object
     //the project name will be different, make sure to change this line below to proper name and also in the imports
     public HWMap robot = new HWMap();
+    double power = 0.45;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,16 +31,56 @@ public class encoders extends LinearOpMode {
         //"blank" encoder counts = 90 degree turn
 
         //speed, leftCounts, rightCounts
-        encoderDrive (0.5, 1200, 1200, 1200, 1200);
-        encoderDrive (0.5, 200, -200, 200, -200);
-        robot.flywheelOne.setPower(1);
-        robot.flywheelTwo.setPower(1);
-        sleep(3000);
-        robot.feedServo.setPosition(1);//do servo programing
-        sleep(1000);
+//        encoderDrive (0.5, 1200, 1200, 1200, 1200);
+//        encoderDrive (0.5, 200, -200, 200, -200);
+
+        encoderDrive (0.5, -1200, -1200, -1200, -1200);
+
+        robot.flywheelOne.setPower(power);
+        robot.flywheelTwo.setPower(power);
+        sleep(5000);
+        robot.feedServo.setPosition(0);//number 1
+        sleep(2000);
+        robot.feedServo.setPosition(1);
         robot.flywheelOne.setPower(0);
         robot.flywheelTwo.setPower(0);
-        robot.feedServo.setPosition(0);
+        sleep(1000);
+        robot.intake.setPower(0.5);
+        sleep(250);
+        robot.intake.setPower(-0.5);
+        sleep(500);
+        robot.intake.setPower(0);//end block
+
+
+        robot.flywheelOne.setPower(power);
+        robot.flywheelTwo.setPower(power);
+        sleep(5000);
+        robot.feedServo.setPosition(0);//number 1
+        sleep(2000);
+        robot.feedServo.setPosition(1);
+        robot.flywheelOne.setPower(0);
+        robot.flywheelTwo.setPower(0);
+        sleep(1000);
+        robot.intake.setPower(0.5);
+        sleep(250);
+        robot.intake.setPower(-1);
+        sleep(500);
+        robot.intake.setPower(0);//end block
+
+        robot.flywheelOne.setPower(power);
+        robot.flywheelTwo.setPower(power);
+        sleep(5000);
+        robot.feedServo.setPosition(0);//number 1
+        sleep(2000);
+        robot.feedServo.setPosition(1);
+        robot.flywheelOne.setPower(0);
+        robot.flywheelTwo.setPower(0);
+        sleep(1000);
+        robot.intake.setPower(0.5);
+        sleep(250);
+        robot.intake.setPower(-1);
+        sleep(500);
+        robot.intake.setPower(0);
 
 
     }
