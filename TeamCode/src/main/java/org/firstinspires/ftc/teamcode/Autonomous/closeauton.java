@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-//name that appearss on the driver hub screen
+//name that appeargss on the driver hub screen
 @Autonomous(name = "closeatuon")
 public class closeauton extends LinearOpMode {
     //making a robot from project file (hardware map)
