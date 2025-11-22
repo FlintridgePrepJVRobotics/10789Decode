@@ -17,7 +17,7 @@ public class closeauton extends LinearOpMode {
         robot.init(hardwareMap);// start block
         waitForStart();
 
-        forward(3700,0.2);
+        forward(3700,-0.2);
 
         robot.flywheelOne.setPower(power);
         robot.flywheelTwo.setPower(power);
