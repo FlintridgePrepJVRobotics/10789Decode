@@ -24,7 +24,7 @@ public class auton extends LinearOpMode {
         robot.feedServo.setPosition(0);
         sleep(2000);
         forward(250,1);
-        forward(100,-0.5);
+        forward(100,-1);
         robot.intake.setPower(-0.5);
         sleep(1000);
         robot.feedServo.setPosition(1);//number 2
@@ -32,7 +32,7 @@ public class auton extends LinearOpMode {
         robot.feedServo.setPosition(0);
         sleep(2000);
         forward(250,1);
-        forward(100,-0.5);
+        forward(100,-1);
         robot.intake.setPower(-0.5);
         sleep(1000);
         robot.feedServo.setPosition(1);//number 3
