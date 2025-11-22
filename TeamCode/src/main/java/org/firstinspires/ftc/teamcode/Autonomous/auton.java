@@ -52,6 +52,7 @@ public class auton extends LinearOpMode {
         robot.frontRightDrive.setPower(speed);
         robot.frontLeftDrive.setPower(speed);
         sleep(time);
+        stopall();
     }
     public void stopall() { //forward
         robot.backRightDrive.setPower(0);
