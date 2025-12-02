@@ -14,7 +14,7 @@ public class closeauton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //initialize hardware map
-        robot.init(hardwareMap);// start block
+        robot.init(hardwareMap);// start bl ock
         waitForStart();
 
         forward(5700,-0.2);

@@ -60,7 +60,7 @@ public class auton extends LinearOpMode {
         sleep(250);
         robot.intake.setPower(-1);
         sleep(500);
-        robot.intake.setPower(0);//end block
+        robot.intake.setPower(0);//end blo ck
 
 
 

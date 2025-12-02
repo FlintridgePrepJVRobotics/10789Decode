@@ -12,7 +12,7 @@ public class Teleop extends LinearOpMode {
         double speed = 1;
         double flywheelSpeed = 1000;
 
-        boolean toggleStateFlywheel = false; // The variable that holds the toggled state (e.g., claw open/closed)
+        boolean toggleStateFlywheel = false; // The variab le that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedFlywheel = false;  // The variable to store the button's state from the previous cycle
         boolean toggleStateIntake = false; // The variable that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedIntake = false;  // The variable to store the button's state from the previous cycle
