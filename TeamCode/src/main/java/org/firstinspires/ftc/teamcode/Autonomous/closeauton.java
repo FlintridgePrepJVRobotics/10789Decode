@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.HWMap;
 public class closeauton extends LinearOpMode {
     //making a robot from project file (hardware map)
     public HWMap robot = new HWMap();
-    double power = 0.45;
+    double power = 1000;
     @Override
     public void runOpMode() throws InterruptedException {
         //initialize hardware map
@@ -19,8 +19,8 @@ public class closeauton extends LinearOpMode {
 
         forward(5700,-0.2);
 
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setVelocity(power);
+        robot.flywheelTwo.setVelocity(power);
         sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
@@ -35,8 +35,8 @@ public class closeauton extends LinearOpMode {
         robot.intake.setPower(0);//end block
 
 
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setVelocity(power);
+        robot.flywheelTwo.setVelocity(power);
         sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
@@ -50,20 +50,14 @@ public class closeauton extends LinearOpMode {
         sleep(500);
         robot.intake.setPower(0);//end block
 
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setVelocity(power);
+        robot.flywheelTwo.setVelocity(power);
         sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
         robot.feedServo.setPosition(1);
         robot.flywheelOne.setPower(0);
         robot.flywheelTwo.setPower(0);
-        sleep(1000);
-        robot.intake.setPower(0.5);
-        sleep(250);
-        robot.intake.setPower(-1);
-        sleep(500);
-        robot.intake.setPower(0);//end block
 
     }
 

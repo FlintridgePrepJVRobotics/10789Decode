@@ -10,14 +10,14 @@ import org.firstinspires.ftc.teamcode.HWMap;
 public class auton extends LinearOpMode {
     //making a robot from project file (hardware map)
     public HWMap robot = new HWMap();
-    double power = 0.55;
+    double power = 1000;
     @Override
     public void runOpMode() throws InterruptedException {
         //initialize hardware map
         robot.init(hardwareMap);// start block
         waitForStart();
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setVelocity(power);
+        robot.flywheelTwo.setVelocity(power);
         sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
@@ -32,8 +32,8 @@ public class auton extends LinearOpMode {
         robot.intake.setPower(0);//end block
 
 
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setVelocity(power);
+        robot.flywheelTwo.setVelocity(power);
         sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);
@@ -47,8 +47,8 @@ public class auton extends LinearOpMode {
         sleep(500);
         robot.intake.setPower(0);//end block
 
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
+        robot.flywheelOne.setVelocity(power);
+        robot.flywheelTwo.setVelocity(power);
         sleep(3000);
         robot.feedServo.setPosition(0);//number 1
         sleep(2000);

@@ -10,7 +10,7 @@ public class Teleop extends LinearOpMode {
         robot.init(hardwareMap);
         waitForStart();
         double speed = 1;
-        double flywheelSpeed = 0.5;
+        double flywheelSpeed = 1000;
 
         boolean toggleStateFlywheel = false; // The variable that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedFlywheel = false;  // The variable to store the button's state from the previous cycle
@@ -56,13 +56,13 @@ public class Teleop extends LinearOpMode {
             //dfghjkl
             telemetry.addData("flywheel speed", flywheelSpeed);
 
-            if (gamepad1.dpad_up && flywheelSpeed < 0.6){
-                flywheelSpeed = flywheelSpeed + 0.025;
+            if (gamepad1.dpad_up){
+                flywheelSpeed = flywheelSpeed + 250;
                 sleep(300);
 
             }
-            if (gamepad1.dpad_down && flywheelSpeed > 0.3){
-                flywheelSpeed = flywheelSpeed - 0.025;
+            if (gamepad1.dpad_down){
+                flywheelSpeed = flywheelSpeed - 250;
                 sleep(300);
             }
 
@@ -98,20 +98,14 @@ public class Teleop extends LinearOpMode {
 
 // Use the toggleState variable to control an action
             if (toggleStateFlywheel) {
-                robot.flywheelOne.setPower(flywheelSpeed);
-                robot.flywheelTwo.setPower(flywheelSpeed);
+                robot.flywheelOne.setVelocity(flywheelSpeed);
+                robot.flywheelTwo.setVelocity(flywheelSpeed);
             } else {
                 robot.flywheelOne.setPower(0);
                 robot.flywheelTwo.setPower(0);
             }
 
 
-
-
-            if (gamepad1.right_trigger > 0.2) {//flywheel
-                robot.flywheelOne.setPower(flywheelSpeed);
-                robot.flywheelTwo.setPower(flywheelSpeed);
-            }
 
             if (gamepad1.left_trigger > 0.2) {//intake
                 robot.intake.setPower(-1);

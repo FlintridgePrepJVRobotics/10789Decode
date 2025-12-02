@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -7,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class HWMap {
     public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
-    public DcMotor flywheelOne, flywheelTwo;
+    public DcMotorEx flywheelOne, flywheelTwo;
     public DcMotor intake;
     public Servo feedServo;
     private DcMotor[] drivemotors;
@@ -18,8 +19,8 @@ public class HWMap {
         backLeftDrive   = hwMap.get(DcMotor.class, "BLD");
         backRightDrive  = hwMap.get(DcMotor.class, "BRD");
         feedServo       = hwMap.get(Servo.class, "feedServo");
-        flywheelOne     = hwMap.get(DcMotor.class, "flywheelOne");
-        flywheelTwo     = hwMap.get(DcMotor.class, "flywheelTwo");
+        flywheelOne     = hwMap.get(DcMotorEx.class, "flywheelOne");
+        flywheelTwo     = hwMap.get(DcMotorEx.class, "flywheelTwo");
         intake          = hwMap.get(DcMotor.class, "intake");
 
         //fl = 0
