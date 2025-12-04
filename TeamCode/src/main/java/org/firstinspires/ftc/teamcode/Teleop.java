@@ -10,7 +10,7 @@ public class Teleop extends LinearOpMode {
         robot.init(hardwareMap);
         waitForStart();
         double speed = 1;
-        double flywheelSpeed = 1000;
+        double flywheelSpeed = 750;
 
         boolean toggleStateFlywheel = false; // The variab le that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedFlywheel = false;  // The variable to store the button's state from the previous cycle
@@ -124,3 +124,4 @@ public class Teleop extends LinearOpMode {
         }
     }
 }
+//6767676767676767767667676776
