@@ -17,6 +17,11 @@ public class Teleop extends LinearOpMode {
         int ticksPerRev =28;
         double flywheelSpeed = 20;
 
+        double P = 10.0;
+        double I = 3.0;
+        double D = 0.0;
+        double F = 12.0;
+
 
         boolean toggleStateFlywheel = false; // The variab le that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedFlywheel = false;  // The variable to store the button's state from the previous cycle
@@ -90,8 +95,8 @@ public class Teleop extends LinearOpMode {
                 toggleStateFlywheel = !toggleStateFlywheel; // Flip the toggle state
             }
             wasPressedFlywheel = gamepad1.right_bumper;
+            double targetTicksPerSec = (flywheelSpeed / 60.0) * ticksPerRev;
 
-            double targetTicksPerSec = flywheelSpeed / 60.0 * ticksPerRev;
 //            double measuredTicksPerSec = robot.flywheelOne.getVelocity();
 //            double measuredRPM = measuredTicksPerSec / ticksPerRev * 60.0;
 
@@ -100,6 +105,9 @@ public class Teleop extends LinearOpMode {
 
 
             if (toggleStateFlywheel) {
+                robot.flywheelOne.setVelocityPIDFCoefficients(P, I, D, F);
+                robot.flywheelTwo.setVelocityPIDFCoefficients(P, I, D, F);
+
                 robot.flywheelOne.setVelocity(targetTicksPerSec);
                 robot.flywheelTwo.setVelocity(targetTicksPerSec);
             } else {
@@ -118,7 +126,6 @@ public class Teleop extends LinearOpMode {
             if (gamepad1.x) {
                 robot.feedServo.setPosition(0);
             } else {
-                robot.feedServo.setPosition(1);
                 robot.feedServo.setPosition(1);
             }
 
