@@ -10,7 +10,13 @@ public class Teleop extends LinearOpMode {
         robot.init(hardwareMap);
         waitForStart();
         double speed = 1;
-        double flywheelSpeed = 750;
+
+        boolean previousGamepad1_dpad_up = false;
+        boolean previousGamepad1_dpad_down = false;
+
+        int ticksPerRev =28;
+        double flywheelSpeed = 20;
+
 
         boolean toggleStateFlywheel = false; // The variab le that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedFlywheel = false;  // The variable to store the button's state from the previous cycle
@@ -19,9 +25,12 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            double y = -gamepad1.left_stick_y;
-            double x = -gamepad1.left_stick_x * 1.1;
-            double rx = gamepad1.right_stick_x;
+            boolean currentGamepad1_dpad_up = gamepad1.dpad_up;
+            boolean currentGamepad1_dpad_down = gamepad1.dpad_down;
+
+            double y = -gamepad1.right_stick_y;
+            double x = gamepad1.right_stick_x * 1.1;
+            double rx = -gamepad1.left_stick_x;
 
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
             double frontLeftPower = (y - x + rx) / denominator;
@@ -33,93 +42,93 @@ public class Teleop extends LinearOpMode {
             robot.backLeftDrive.setPower(backLeftPower * speed);
             robot.frontRightDrive.setPower(frontRightPower * speed);
             robot.backRightDrive.setPower(backRightPower * speed);
-            //to debug: dpad motor control.
-//            if (gamepad1.dpad_left){
-//                robot.frontLeftDrive.setPower(1);
-//            }
-//            if (gamepad1.dpad_right){
-//                robot.frontRightDrive.setPower(1);
-//            }
-//            if (gamepad1.dpad_up){
-//                robot.backLeftDrive.setPower(1);
-//            }
-//            if (gamepad1.dpad_down){
-//                robot.backRightDrive.setPower(1);
-//            }
-//            if (gamepad1.y) {//intake
-//                robot.flywheelOne.setPower(1);
-//                robot.flywheelTwo.setPower(1);
-//            } else if (gamepad1.a) {
-//                robot.flywheelOne.setPower(0);
-//                robot.flywheelTwo.setPower(0);
-//            }
-            //dfghjkl
+
+
             telemetry.addData("flywheel speed", flywheelSpeed);
 
             if (gamepad1.dpad_up){
-                flywheelSpeed = flywheelSpeed + 250;
-                sleep(300);
+                flywheelSpeed = flywheelSpeed + 5;
+                sleep(250);
 
             }
             if (gamepad1.dpad_down){
-                flywheelSpeed = flywheelSpeed - 250;
-                sleep(300);
+                flywheelSpeed = flywheelSpeed - 5;
+                sleep(250);
             }
+
+            //speed up
+//            if (!currentGamepad1_dpad_up && previousGamepad1_dpad_up) {
+//                flywheelSpeed += 250;
+//
+//                previousGamepad1_dpad_up = currentGamepad1_dpad_up;
+//            }
+//
+//            //speed down
+//            if (!currentGamepad1_dpad_down && previousGamepad1_dpad_down) {
+//                flywheelSpeed -= 250;
+//
+//                previousGamepad1_dpad_down = currentGamepad1_dpad_down;
+//            }
+
+
 
             //INTAKE
-            // Check if the button is currently pressed AND it was NOT pressed last cycle
             if (gamepad1.left_bumper && !wasPressedIntake) {
-                // This condition is true only at the exact moment the button is pressed down
                 toggleStateIntake = !toggleStateIntake; // Flip the toggle state
             }
-
-// Update the 'wasPressed' variable for the next loop iteration
             wasPressedIntake = gamepad1.left_bumper;
-
-// Use the toggleState variable to control an action
             if (toggleStateIntake) {
-                // Code to run when the toggle is true (e.g., open a claw, turn on an intake)
                 robot.intake.setPower(-1);
             } else {
-                // Code to run when the toggle is false (e.g., close a claw, turn off an intake)
                 robot.intake.setPower(0);
             }
 
 
             //FLYHWEEL
-            // Check if the button is currently pressed AND it was NOT pressed last cycle
+
             if (gamepad1.right_bumper && !wasPressedFlywheel) {
-                // This condition is true only at the exact moment the button is pressed down
                 toggleStateFlywheel = !toggleStateFlywheel; // Flip the toggle state
             }
-
-// Update the 'wasPressed' variable for the next loop iteration
             wasPressedFlywheel = gamepad1.right_bumper;
 
-// Use the toggleState variable to control an action
+            double targetTicksPerSec = flywheelSpeed / 60.0 * ticksPerRev;
+//            double measuredTicksPerSec = robot.flywheelOne.getVelocity();
+//            double measuredRPM = measuredTicksPerSec / ticksPerRev * 60.0;
+
+
+
+
+
             if (toggleStateFlywheel) {
-                robot.flywheelOne.setVelocity(flywheelSpeed);
-                robot.flywheelTwo.setVelocity(flywheelSpeed);
+                robot.flywheelOne.setVelocity(targetTicksPerSec);
+                robot.flywheelTwo.setVelocity(targetTicksPerSec);
             } else {
-                robot.flywheelOne.setPower(0);
-                robot.flywheelTwo.setPower(0);
+                robot.flywheelOne.setVelocity(0);
+                robot.flywheelTwo.setVelocity(0);
             }
 
 
 
-            if (gamepad1.left_trigger > 0.2) {//intake
-                robot.intake.setPower(-1);
-            }
+//            if (gamepad1.left_trigger > 0.2) {//intake forward
+//                robot.intake.setPower(-1);
+//            }
 
-            if (gamepad1.dpad_right) {//intake
-                robot.intake.setPower(1);
-            }
+            if (gamepad1.dpad_right) robot.intake.setPower(1);
 
             if (gamepad1.x) {
                 robot.feedServo.setPosition(0);
             } else {
                 robot.feedServo.setPosition(1);
+                robot.feedServo.setPosition(1);
             }
+
+//            if (robot.feedServo.getPosition() == 1 && gamepad1.x == true){
+//                robot.feedServo.setPosition(0);
+//                sleep(500);
+//            } else if (robot.feedServo.getPosition() == 0 && gamepad1.x == true){
+//                robot.feedServo.setPosition(1);
+//                sleep(500);
+//            }
             telemetry.update();
         }
     }
