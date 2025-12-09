@@ -125,7 +125,7 @@ public class Teleop extends LinearOpMode {
             //FLYHWEEL
 
             if (gamepad1.right_bumper && !wasPressedFlywheel) {
-                toggleStateFlywheel = !toggleStateFlywheel; // Flip the toggle state
+                toggleStateFlywheel = !toggleStateFlywheel; // Flip the toggle statejkkj
             }
             wasPressedFlywheel = gamepad1.right_bumper;
             double targetTicksPerSec = flywheelSpeed / 60.0 * ticksPerRev;
