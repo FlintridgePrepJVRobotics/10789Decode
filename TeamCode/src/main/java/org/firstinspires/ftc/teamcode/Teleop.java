@@ -29,6 +29,15 @@ public class Teleop extends LinearOpMode {
         boolean toggleStateIntake = false; // The variable that holds the toggled state (e.g., claw open/closed)
         boolean wasPressedIntake = false;  // The variable to store the button's state from the previous cycle
 
+        int checkInterval = 200;
+        int prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
+        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer.reset();
+
+        int prevPositionnew2 = robot.flywheelTwo.getCurrentPosition();
+        ElapsedTime timer1 = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer1.reset();
+
         while (opModeIsActive()) {
 
             boolean currentGamepad1_dpad_up = gamepad1.dpad_up;
@@ -52,12 +61,8 @@ public class Teleop extends LinearOpMode {
 
             telemetry.addData("flywheel speed", flywheelSpeed);
 
-            int checkInterval = 200;
-            int prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
-            ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-            timer.reset();
-            while (opModeIsActive() /* or however long you want to know the encoder speed for*/) {
-                if (timer.time() > checkInterval) {
+
+            if (timer.time() > checkInterval) {
                     double speednew1 = (double) (robot.flywheelOne.getCurrentPosition() - prevPositionnew1) / timer.time();
 
                     // This will print out the ticks per millisecond of the motor.
@@ -65,22 +70,19 @@ public class Teleop extends LinearOpMode {
                     telemetry.update();
                     prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
                     timer.reset();
-                }
-            }
-            int prevPositionnew2 = robot.flywheelTwo.getCurrentPosition();
-            ElapsedTime timer1 = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-            timer1.reset();
-            while (opModeIsActive() /* or however long you want to know the encoder speed for*/) {
-                if (timer1.time() > checkInterval) {
-                    double speednew2 = (double) (robot.flywheelTwo.getCurrentPosition() - prevPositionnew2) / timer1.time();
 
-                    // This will print out the ticks per millisecond of the motor.
-                    telemetry.addData("Ticks per ms for motor 2", speednew2);
-                    telemetry.update();
-                    prevPositionnew2 = robot.flywheelTwo.getCurrentPosition();
-                    timer.reset();
-                }
             }
+
+//            if (timer1.time() > checkInterval) {
+//                    double speednew2 = (double) (robot.flywheelTwo.getCurrentPosition() - prevPositionnew2) / timer1.time();
+//
+//                    // This will print out the ticks per millisecond of the motor.
+//                    telemetry.addData("Ticks per ms for motor 2", speednew2);
+//                    telemetry.update();
+//                    prevPositionnew2 = robot.flywheelTwo.getCurrentPosition();
+//                    timer.reset();
+//
+//            }
 
             if (gamepad1.dpad_up){
                 flywheelSpeed = flywheelSpeed + 5;
@@ -139,6 +141,10 @@ public class Teleop extends LinearOpMode {
 
                 robot.flywheelOne.setVelocity(targetTicksPerSec);
                 robot.flywheelTwo.setVelocity(targetTicksPerSec);
+
+//                robot.flywheelOne.setPower(flywheelSpeed);
+//                robot.flywheelTwo.setPower(flywheelSpeed);
+
             } else {
                 robot.flywheelOne.setVelocity(0);
                 robot.flywheelTwo.setVelocity(0);
