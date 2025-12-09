@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "2025Decode10789")
 public class Teleop extends LinearOpMode {
@@ -50,6 +51,36 @@ public class Teleop extends LinearOpMode {
 
 
             telemetry.addData("flywheel speed", flywheelSpeed);
+
+            int checkInterval = 200;
+            int prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
+            ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+            timer.reset();
+            while (opModeIsActive() /* or however long you want to know the encoder speed for*/) {
+                if (timer.time() > checkInterval) {
+                    double speednew1 = (double) (robot.flywheelOne.getCurrentPosition() - prevPositionnew1) / timer.time();
+
+                    // This will print out the ticks per millisecond of the motor.
+                    telemetry.addData("Ticks per ms for motor 1", speednew1);
+                    telemetry.update();
+                    prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
+                    timer.reset();
+                }
+            }
+            int prevPositionnew2 = robot.flywheelTwo.getCurrentPosition();
+            ElapsedTime timer1 = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+            timer1.reset();
+            while (opModeIsActive() /* or however long you want to know the encoder speed for*/) {
+                if (timer1.time() > checkInterval) {
+                    double speednew2 = (double) (robot.flywheelTwo.getCurrentPosition() - prevPositionnew2) / timer1.time();
+
+                    // This will print out the ticks per millisecond of the motor.
+                    telemetry.addData("Ticks per ms for motor 2", speednew2);
+                    telemetry.update();
+                    prevPositionnew2 = robot.flywheelTwo.getCurrentPosition();
+                    timer.reset();
+                }
+            }
 
             if (gamepad1.dpad_up){
                 flywheelSpeed = flywheelSpeed + 5;
