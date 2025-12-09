@@ -62,16 +62,16 @@ public class Teleop extends LinearOpMode {
             telemetry.addData("flywheel speed", flywheelSpeed);
 
 
-            if (timer.time() > checkInterval) {
-                    double speednew1 = (double) (robot.flywheelOne.getCurrentPosition() - prevPositionnew1) / timer.time();
-
-                    // This will print out the ticks per millisecond of the motor.
-                    telemetry.addData("Ticks per ms for motor 1", speednew1);
-                    telemetry.update();
-                    prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
-                    timer.reset();
-
-            }
+//            if (timer.time() > checkInterval) {
+//                    double speednew1 = (double) (robot.flywheelOne.getCurrentPosition() - prevPositionnew1) / timer.time();
+//
+//                    // This will print out the ticks per millisecond of the motor.
+//                    telemetry.addData("Ticks per ms for motor 1", speednew1);
+//                    telemetry.update();
+//                    prevPositionnew1 = robot.flywheelOne.getCurrentPosition();
+//                    timer.reset();
+//
+//            }
 
 //            if (timer1.time() > checkInterval) {
 //                    double speednew2 = (double) (robot.flywheelTwo.getCurrentPosition() - prevPositionnew2) / timer1.time();
@@ -139,8 +139,8 @@ public class Teleop extends LinearOpMode {
                 robot.flywheelOne.setVelocityPIDFCoefficients(P, I, D, F);
                 robot.flywheelTwo.setVelocityPIDFCoefficients(P, I, D, F);
 
-                robot.flywheelOne.setVelocity(targetTicksPerSec);
-                robot.flywheelTwo.setVelocity(targetTicksPerSec);
+                robot.flywheelOne.setVelocity(28);
+                robot.flywheelTwo.setVelocity(28);
 
 //                robot.flywheelOne.setPower(flywheelSpeed);
 //                robot.flywheelTwo.setPower(flywheelSpeed);
