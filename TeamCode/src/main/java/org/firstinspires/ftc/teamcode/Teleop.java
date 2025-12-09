@@ -95,12 +95,10 @@ public class Teleop extends LinearOpMode {
                 toggleStateFlywheel = !toggleStateFlywheel; // Flip the toggle state
             }
             wasPressedFlywheel = gamepad1.right_bumper;
-            double targetTicksPerSec = (flywheelSpeed / 60.0) * ticksPerRev;
+            double targetTicksPerSec = flywheelSpeed / 60.0 * ticksPerRev;
 
 //            double measuredTicksPerSec = robot.flywheelOne.getVelocity();
 //            double measuredRPM = measuredTicksPerSec / ticksPerRev * 60.0;
-
-
 
 
 
