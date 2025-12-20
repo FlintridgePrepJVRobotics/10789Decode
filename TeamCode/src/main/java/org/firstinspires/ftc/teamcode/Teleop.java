@@ -51,11 +51,12 @@ public class Teleop extends LinearOpMode {
 
         // Shooter speed in *flywheel RPM* (not motor RPM)
         // Adjust this range to what feels good for your shooter
-        double shooterRPM   = 400;  // starting flywheel RPM
+        double shooterRPM   = 370;  // starting flywheel RPM
         double minShooterRPM = 100; // minimum flywheel RPM
         double maxShooterRPM = 1200; // maximum flywheel RPM
 
         // Toggle states
+
         boolean toggleStateFlywheel = false;
         boolean wasPressedFlywheel = false;
 
@@ -70,7 +71,7 @@ public class Teleop extends LinearOpMode {
         while (opModeIsActive()) {
 
             // ----------------- DRIVETRAIN -----------------
-            double y = -gamepad1.right_stick_y;
+            double y = gamepad1.right_stick_y;
             double x = gamepad1.right_stick_x * 1.1;
             double rx = -gamepad1.left_stick_x;
 
@@ -98,17 +99,31 @@ public class Teleop extends LinearOpMode {
             prevDpadUp = gamepad1.dpad_up;
             prevDpadDown = gamepad1.dpad_down;
 
-            // ----------------- INTAKE TOGGLE -----------------
-            if (gamepad1.left_bumper && !wasPressedIntake) {
-                toggleStateIntake = !toggleStateIntake;
-            }
-            wasPressedIntake = gamepad1.left_bumper;
+            // ----------------- INTAKE (HOLD + REVERSE) -----------------
+// Hold LEFT BUMPER to intake
+// Hold RIGHT TRIGGER to reverse intake
 
-            if (toggleStateIntake) {
-                robot.intake.setPower(-1);
-            } else {
-                robot.intake.setPower(0);
+            if (gamepad1.left_bumper) {
+                robot.intake.setPower(-1);   // intake in
             }
+            else if (gamepad1.right_trigger > 0.2) {
+                robot.intake.setPower(1);    // intake reverse
+            }
+            else {
+                robot.intake.setPower(0);    // stop intake
+            }
+
+//            // ----------------- INTAKE TOGGLE -----------------
+//            if (gamepad1.left_bumper && !wasPressedIntake) {
+//                toggleStateIntake = !toggleStateIntake;
+//            }
+//            wasPressedIntake = gamepad1.left_bumper;
+//
+//            if (toggleStateIntake) {
+//                robot.intake.setPower(-1);
+//            } else {
+//                robot.intake.setPower(0);
+//            }
 
             // ----------------- FLYWHEEL TOGGLE + VELOCITY CONTROL -----------------
             if (gamepad1.right_bumper && !wasPressedFlywheel) {
