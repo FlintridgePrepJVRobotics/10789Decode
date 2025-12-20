@@ -5,21 +5,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@Autonomous(name = "HSOOTINPLACE")
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+@Autonomous(name = "SHootinplace")
 public class auton extends LinearOpMode {
 
     public HWMap robot = new HWMap();
 
-    // ===== SHOOTER CONSTANTS (same logic as TeleOp) =====
+    // ===== SHOOTER CONSTANTS (same as TeleOp) =====
     private static final double MOTOR_TICKS_PER_REV = 560.0;
     private static final double MOTOR_MAX_RPM = 300.0;
     private static final double SHOOTER_TO_MOTOR_RATIO = 4.0;
-
-    // ===== DRIVE CONSTANTS =====
-    private static final double DRIVE_TICKS_PER_REV = 560.0; // HD Hex
-    private static final double WHEEL_DIAMETER_IN = 3.78;    // CHANGE if needed
-    private static final double TICKS_PER_INCH =
-            DRIVE_TICKS_PER_REV / (Math.PI * WHEEL_DIAMETER_IN);
 
     @Override
     public void runOpMode() {
@@ -29,81 +29,57 @@ public class auton extends LinearOpMode {
         DcMotorEx flywheelOne = (DcMotorEx) robot.flywheelOne;
         DcMotorEx flywheelTwo = (DcMotorEx) robot.flywheelTwo;
 
-        // Reset encoders
+        // Shooter encoder setup
         flywheelOne.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         flywheelTwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         flywheelOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flywheelTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // PIDF (same as TeleOp)
+        // Same PIDF as TeleOp
         flywheelOne.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
         flywheelTwo.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
 
         waitForStart();
-
         if (!opModeIsActive()) return;
 
-        // ================= SHOOT =================
+        // ================= SPIN UP SHOOTER =================
         double shooterRPM = 400;
+
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
 
-        double targetTicksPerSec = motorRPM * MOTOR_TICKS_PER_REV / 60.0;
+        double targetTicksPerSec =
+                motorRPM * MOTOR_TICKS_PER_REV / 60.0;
 
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
 
-        sleep(1200); // spin-up time
+        sleep(1200); // initial spin-up
 
-        robot.feedServo.setPosition(0); // fire
-        sleep(300);
-        robot.feedServo.setPosition(1);
+        // ================= SHOOT 3 RINGS =================
+        for (int i = 0; i < 3; i++) {
 
-        sleep(300);
+            sleep(2500);
 
-        flywheelOne.setVelocity(0);
-        flywheelTwo.setVelocity(0);
+            // Feed ring into shooter
+            robot.feedServo.setPosition(0);
+            sleep(1600);// slow servo push
+            robot.feedServo.setPosition(1);
+            sleep(1600);
 
-        // ================= DRIVE FORWARD =================
-        double distanceInches = 18; // 1.5 feet (change to 12 for 1 foot)
-        int moveTicks = (int) (distanceInches * TICKS_PER_INCH);
 
-        robot.frontLeftDrive.setTargetPosition(moveTicks);
-        robot.frontRightDrive.setTargetPosition(moveTicks);
-        robot.backLeftDrive.setTargetPosition(moveTicks);
-        robot.backRightDrive.setTargetPosition(moveTicks);
+            // Run intake to load ring
+            robot.intake.setPower(-0.65);
+            sleep(500);          // intake time to move ring up
+            robot.intake.setPower(0);
 
-        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        robot.frontLeftDrive.setPower(0.5);
-        robot.frontRightDrive.setPower(0.5);
-        robot.backLeftDrive.setPower(0.5);
-        robot.backRightDrive.setPower(0.5);
-
-        while (opModeIsActive() &&
-                robot.frontLeftDrive.isBusy() &&
-                robot.frontRightDrive.isBusy()) {
-            idle();
         }
 
-        robot.frontLeftDrive.setPower(0);
-        robot.frontRightDrive.setPower(0);
-        robot.backLeftDrive.setPower(0);
-        robot.backRightDrive.setPower(0);
+        // ================= SHUT DOWN =================
+        robot.intake.setPower(0);
+        flywheelOne.setVelocity(0);
+        flywheelTwo.setVelocity(0);
     }
 }
 //package org.firstinspires.ftc.teamcode.Autonomous;
