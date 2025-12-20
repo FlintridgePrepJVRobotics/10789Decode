@@ -1,108 +1,107 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.HWMap;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.HWMap;
+
 @Autonomous(name="encoders")
-//"tag" that is displayed on driver hub
 public class encoders extends LinearOpMode {
-    //creating robot object
-    //the project name will be different, make sure to change this line below to proper name and also in the imports
+
     public HWMap robot = new HWMap();
-    double power = 0.45;
+
+    public void encoderDrive ( double speed,
+                               double fRightCounts, double fLeftCounts,
+                               double bRightCounts, double bLeftCounts){
+
+        int newfLeftTarget = robot.frontLeftDrive.getCurrentPosition();
+        int newfRightTarget = robot.frontRightDrive.getCurrentPosition();
+        int newbLeftTarget = robot.backLeftDrive.getCurrentPosition();
+        int newbRightTarget = robot.backRightDrive.getCurrentPosition();
+
+        robot.frontLeftDrive.setTargetPosition((int)newfLeftTarget + (int)fLeftCounts);
+        robot.frontRightDrive.setTargetPosition((int)newfRightTarget + (int)fRightCounts);
+        robot.backLeftDrive.setTargetPosition((int)newbLeftTarget + (int)bLeftCounts);
+        robot.backRightDrive.setTargetPosition((int)newbRightTarget + (int)bRightCounts);
+
+        double p = Math.abs(speed);
+        robot.frontLeftDrive.setPower(p);
+        robot.frontRightDrive.setPower(p);
+        robot.backLeftDrive.setPower(p);
+        robot.backRightDrive.setPower(p);
+
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (robot.backRightDrive.isBusy() && robot.backLeftDrive.isBusy() && robot.frontRightDrive.isBusy() && robot.frontLeftDrive.isBusy()){
+
+        }
+        robot.frontLeftDrive.setPower(0);
+        robot.frontRightDrive.setPower(0);
+        robot.backLeftDrive.setPower(0);
+        robot.backRightDrive.setPower(0);
+
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //initialize hardware map
+
+        // Initialize hardware
         robot.init(hardwareMap);
+
+        // Reset encoders
         robot.frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //wait for start button to be pressed
+        // Optional: show starting encoder values
+        telemetry.addData("Start", "FL:%d FR:%d BL:%d BR:%d",
+                robot.frontLeftDrive.getCurrentPosition(),
+                robot.frontRightDrive.getCurrentPosition(),
+                robot.backLeftDrive.getCurrentPosition(),
+                robot.backRightDrive.getCurrentPosition());
+        telemetry.update();
+
         waitForStart();
+        if (isStopRequested()) return;
 
-        //write autonomous code here
+        // EXAMPLE MOVE:
+        // NOTE: Your method order is (fRight, fLeft, bRight, bLeft).
+        // If you want all wheels same direction, keep the signs the same:
 
-        //record number of encoder counts for certain distances
-        //"blank" encoder counts = 1 tile
-        //"blank" encoder counts = 90 degree turn
+        // Small pause so you can read end telemetry
+        sleep(300);
 
-        //speed, leftCounts, rightCounts
-//        encoderDrive (0.5, 1200, 1200, 1200, 1200);
-//        encoderDrive (0.5, 200, -200, 200, -200);
+        encoderDrive(0.2, -2000, 2000, -2000, 2000);
 
-        encoderDrive (0.1, -2000, -2000, -2000, -2000);
+        /**
+         * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)
+         * Direction comes from the TARGET POSITION (encoder sign), since power is abs(speed).
+         */
 
+        // Use OR so telemetry keeps updating as long as ANY motor is still mo
+
+        // Go back to encoder mode
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Show final encoder values
+        telemetry.addData("Done", "FL:%d FR:%d BL:%d BR:%d",
+                robot.frontLeftDrive.getCurrentPosition(),
+                robot.frontRightDrive.getCurrentPosition(),
+                robot.backLeftDrive.getCurrentPosition(),
+                robot.backRightDrive.getCurrentPosition());
+        telemetry.update();
     }
 
-
-    //encoder method
-    public void encoderDrive(double speed,
-                             double fRightCounts, double fLeftCounts, double bRightCounts, double bLeftCounts) {
-        int newfLeftTarget;
-        int newfRightTarget;
-        int newbLeftTarget;
-        int newbRightTarget;
-
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
-
-            // Determine new target position, and pass to motor controller
-            newfLeftTarget = robot.frontLeftDrive.getCurrentPosition() + (int) (fLeftCounts);
-            newfRightTarget = robot.frontRightDrive.getCurrentPosition() + (int) (fRightCounts);
-            newbLeftTarget = robot.backLeftDrive.getCurrentPosition() + (int) (bLeftCounts);
-            newbRightTarget = robot.backRightDrive.getCurrentPosition() + (int) (bRightCounts);
-            robot.frontLeftDrive.setTargetPosition(newfLeftTarget);
-            robot.frontRightDrive.setTargetPosition(newfRightTarget);
-            robot.backLeftDrive.setTargetPosition(newbLeftTarget);
-            robot.backRightDrive.setTargetPosition(newbRightTarget);
-
-            // Turn On RUN_TO_POSITION
-            robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            robot.frontRightDrive.setPower(Math.abs(speed));
-            robot.frontLeftDrive.setPower(Math.abs(speed));
-            robot.backLeftDrive.setPower(Math.abs(speed));
-            robot.backRightDrive.setPower(Math.abs(speed));
-
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
-            // its target position, the motion will stop.  This is "safer" in the event that the robot will
-            // always end the motion as soon as possible.
-            // However, if you require that BOTH motors have finished their moves before the robot continues
-            // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (robot.frontLeftDrive.isBusy() && robot.frontRightDrive.isBusy() && robot.backLeftDrive.isBusy() && robot.backRightDrive.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newfLeftTarget, newfRightTarget, newbLeftTarget, newbRightTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        robot.frontLeftDrive.getCurrentPosition(),
-                        robot.frontRightDrive.getCurrentPosition(),
-                        robot.backLeftDrive.getCurrentPosition(),
-                        robot.backRightDrive.getCurrentPosition());
-
-
-                telemetry.update();
-            }
-
-            // Stop all motion;
-            robot.frontLeftDrive.setPower(0);
-            robot.frontRightDrive.setPower(0);
-            robot.backLeftDrive.setPower(0);
-            robot.backRightDrive.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
-    }
 }
