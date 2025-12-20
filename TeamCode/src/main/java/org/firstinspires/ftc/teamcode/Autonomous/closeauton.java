@@ -80,5 +80,20 @@ public class closeauton extends LinearOpMode {
         robot.intake.setPower(0);
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
+
+    }
+        public void forward(int time, double speed) { //forward
+            robot.backRightDrive.setPower(speed);
+            robot.backLeftDrive.setPower(speed);
+            robot.frontRightDrive.setPower(speed);
+            robot.frontLeftDrive.setPower(speed);
+            sleep(time);
+            stopall();
+        }
+        public void stopall() { //forward
+        robot.backRightDrive.setPower(0);
+        robot.backLeftDrive.setPower(0);
+        robot.frontRightDrive.setPower(0);
+        robot.frontLeftDrive.setPower(0);
     }
 }

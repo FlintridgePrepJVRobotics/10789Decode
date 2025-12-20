@@ -78,9 +78,9 @@ public class encoders extends LinearOpMode {
         // If you want all wheels same direction, keep the signs the same:
 
         // Small pause so you can read end telemetry
-        sleep(300);
 
-        encoderDrive(0.2, -2000, 2000, -2000, 2000);
+
+        encoderDrive(0.2, -1000, -1000, -1000, -1000);
 
         /**
          * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)
