@@ -34,54 +34,7 @@ public class encoders extends LinearOpMode {
 //        encoderDrive (0.5, 1200, 1200, 1200, 1200);
 //        encoderDrive (0.5, 200, -200, 200, -200);
 
-        encoderDrive (0.5, -1200, -1200, -1200, -1200);
-
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
-        sleep(5000);
-        robot.feedServo.setPosition(0);//number 1
-        sleep(2000);
-        robot.feedServo.setPosition(1);
-        robot.flywheelOne.setPower(0);
-        robot.flywheelTwo.setPower(0);
-        sleep(1000);
-        robot.intake.setPower(0.5);
-        sleep(250);
-        robot.intake.setPower(-0.5);
-        sleep(500);
-        robot.intake.setPower(0);//end block
-
-
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
-        sleep(5000);
-        robot.feedServo.setPosition(0);//number 1
-        sleep(2000);
-        robot.feedServo.setPosition(1);
-        robot.flywheelOne.setPower(0);
-        robot.flywheelTwo.setPower(0);
-        sleep(1000);
-        robot.intake.setPower(0.5);
-        sleep(250);
-        robot.intake.setPower(-1);
-        sleep(500);
-        robot.intake.setPower(0);//end block
-
-        robot.flywheelOne.setPower(power);
-        robot.flywheelTwo.setPower(power);
-        sleep(5000);
-        robot.feedServo.setPosition(0);//number 1
-        sleep(2000);
-        robot.feedServo.setPosition(1);
-        robot.flywheelOne.setPower(0);
-        robot.flywheelTwo.setPower(0);
-        sleep(1000);
-        robot.intake.setPower(0.5);
-        sleep(250);
-        robot.intake.setPower(-1);
-        sleep(500);
-        robot.intake.setPower(0);
-
+        encoderDrive (0.1, -2000, -2000, -2000, -2000);
 
     }
 
