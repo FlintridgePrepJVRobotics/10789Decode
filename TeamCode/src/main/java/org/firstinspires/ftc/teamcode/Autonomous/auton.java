@@ -58,19 +58,23 @@ public class auton extends LinearOpMode {
         sleep(1200); // initial spin-up
 
         // ================= SHOOT 3 RINGS =================
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
 
             sleep(2500);
 
             // Feed ring into shooter
             robot.feedServo.setPosition(0);
-            sleep(1600);// slow servo push
+            sleep(2000);// slow servo push
+
+            // Run intake to load ring
+            robot.intake.setPower(-0.85);
+
+
             robot.feedServo.setPosition(1);
             sleep(1600);
 
 
-            // Run intake to load ring
-            robot.intake.setPower(-0.65);
+
             sleep(500);          // intake time to move ring up
             robot.intake.setPower(0);
 
@@ -80,6 +84,7 @@ public class auton extends LinearOpMode {
         robot.intake.setPower(0);
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
+
     }
 }
 //package org.firstinspires.ftc.teamcode.Autonomous;
