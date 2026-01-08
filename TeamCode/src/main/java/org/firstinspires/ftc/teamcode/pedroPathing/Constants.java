@@ -39,9 +39,12 @@ public class Constants {
             .rightRearMotorName("backRightDrive")
             .leftRearMotorName("backLeftDrive")
             .leftFrontMotorName("frontLeftDrive")
+            .forwardTicksToInches(0)
             .leftFrontEncoderDirection(Encoder.FORWARD)
             .leftRearEncoderDirection(Encoder.FORWARD)
             .rightFrontEncoderDirection(Encoder.FORWARD)
+            .robotWidth(17.5)
+            .robotLength(17.5)
             .rightRearEncoderDirection(Encoder.FORWARD);
 
 //https://pedropathing.com/docs/pathing/tuning/localization/drive-encoder
