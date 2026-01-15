@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Constants {
-    public static FollowerConstants followerConstants = new FollowerConstants();
-                //.mass(5);
+    public static FollowerConstants followerConstants = new FollowerConstants()
+        .mass(17.5);
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
     public static Follower createFollower(HardwareMap hardwareMap) {
@@ -25,21 +25,23 @@ public class Constants {
 //sdfsdfsdfsdfsdfsdfs
     public static MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
-            .rightFrontMotorName("frontRightDrive")
-            .rightRearMotorName("backRightDrive")
-            .leftRearMotorName("backLeftDrive")
-            .leftFrontMotorName("frontLeftDrive")
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
+            .rightFrontMotorName("FLD")
+            .rightRearMotorName("BRD")
+            .leftRearMotorName("BLD")
+            .leftFrontMotorName("FRD")
+            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE);
 
     public static DriveEncoderConstants localizerConstants = new DriveEncoderConstants()
-            .rightFrontMotorName("frontRightDrive")
-            .rightRearMotorName("backRightDrive")
-            .leftRearMotorName("backLeftDrive")
-            .leftFrontMotorName("frontLeftDrive")
-            .forwardTicksToInches(0)
+            .rightFrontMotorName("FLD")
+            .rightRearMotorName("BRD")
+            .leftRearMotorName("BLD")
+            .leftFrontMotorName("FRD")
+            .forwardTicksToInches(3)
+            .strafeTicksToInches(5)
+            .turnTicksToInches(3)
             .leftFrontEncoderDirection(Encoder.FORWARD)
             .leftRearEncoderDirection(Encoder.FORWARD)
             .rightFrontEncoderDirection(Encoder.FORWARD)
