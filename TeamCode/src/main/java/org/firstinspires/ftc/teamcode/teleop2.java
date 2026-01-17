@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@TeleOp(name = "2025Decode10789")
-public class Teleop extends LinearOpMode {
+@TeleOp(name = "teleop2")
+public class teleop2 extends LinearOpMode {
 
     public HWMap robot = new HWMap();
 
@@ -55,6 +55,13 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            if (gamepad1.left_bumper) {
+                robot.intake.setPower(-1);
+            } else if (gamepad1.dpad_right) {
+                robot.intake.setPower(1);
+            } else {
+                robot.intake.setPower(0);
+            }
             // ----------------- INTAKE TOGGLE -----------------
             if (gamepad1.left_bumper && !wasPressedIntake) {
                 toggleStateIntake = !toggleStateIntake;
