@@ -46,7 +46,7 @@ public class closeauton extends LinearOpMode {
         forward(4200, 0.3);
 
         // ================= SPIN UP SHOOTER =================
-        double shooterRPM = 360;
+        double shooterRPM = 300;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
@@ -64,16 +64,11 @@ public class closeauton extends LinearOpMode {
 
             sleep(2500);
 
-            // Feed ring into shooter
-            robot.feedServo.setPosition(0);
-            sleep(1600);// slow servo push
+
 
             // Run intake to load ring
-            robot.intake.setPower(-0.85);
+            robot.intake.setPower(-0.8);
 
-
-            robot.feedServo.setPosition(1);
-            sleep(1600);
 
 
 

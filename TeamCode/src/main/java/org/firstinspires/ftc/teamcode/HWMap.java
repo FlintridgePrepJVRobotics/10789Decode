@@ -10,7 +10,6 @@ public class HWMap {
     public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
     public DcMotorEx flywheelOne, flywheelTwo;
     public DcMotor intake;
-    public Servo feedServo;
     private DcMotor[] drivemotors;
 
     public void init(HardwareMap hwMap) {
@@ -18,7 +17,7 @@ public class HWMap {
         frontRightDrive = hwMap.get(DcMotor.class, "FRD");
         backLeftDrive   = hwMap.get(DcMotor.class, "BLD");
         backRightDrive  = hwMap.get(DcMotor.class, "BRD");
-        feedServo       = hwMap.get(Servo.class, "feedServo");
+//        feedServo       = hwMap.get(Servo.class, "feedServo");
         flywheelOne     = hwMap.get(DcMotorEx.class, "flywheelOne");
         flywheelTwo     = hwMap.get(DcMotorEx.class, "flywheelTwo");
         intake          = hwMap.get(DcMotor.class, "intake");
@@ -56,7 +55,7 @@ public class HWMap {
     public void stopAll() {
         for (DcMotor motor : drivemotors) {
             motor.setPower(0);
-            feedServo.setPosition(1);
+//            feedServo.setPosition(1);
         }
     }
 }

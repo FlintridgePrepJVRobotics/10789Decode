@@ -134,11 +134,11 @@ public class teleop2 extends LinearOpMode {
             }
 
             // ----------------- FEED SERVO -----------------
-            if (gamepad1.x) {
-                robot.feedServo.setPosition(0);
-            } else {
-                robot.feedServo.setPosition(1);
-            }
+//            if (gamepad1.x) {
+//                robot.feedServo.setPosition(0);
+//            } else {
+//                robot.feedServo.setPosition(1);
+//            }
 
             // ----------------- TELEMETRY -----------------
 

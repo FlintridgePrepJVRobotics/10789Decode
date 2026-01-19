@@ -10,11 +10,12 @@ public class Teleop extends LinearOpMode {
     public HWMap robot = new HWMap();
 
     private static final double MOTOR_TICKS_PER_REV = 560.0;
-    private static final double MOTOR_MAX_RPM      = 300.0;
+    private static final double MOTOR_MAX_RPM = 300.0;
     private static final double SHOOTER_TO_MOTOR_RATIO = 4.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         robot.init(hardwareMap);
 
         DcMotorEx flywheelOne = robot.flywheelOne;
@@ -39,7 +40,7 @@ public class Teleop extends LinearOpMode {
 
         double driveSpeed = 1.0;
 
-        double shooterRPM    = 360;
+        double shooterRPM = 300;
         double minShooterRPM = 100;
         double maxShooterRPM = 1200;
 
@@ -48,6 +49,8 @@ public class Teleop extends LinearOpMode {
 
         boolean toggleStateIntake = false;
         boolean wasPressedIntake = false;
+        boolean wasPressedB = false;
+        boolean wasPressedA = false;
 
         boolean prevDpadUp = false;
         boolean prevDpadDown = false;
@@ -55,38 +58,73 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            // ----------------- INTAKE TOGGLE -----------------
-            if (gamepad1.left_bumper && !wasPressedIntake) {
-                toggleStateIntake = !toggleStateIntake;
-            }
-            wasPressedIntake = gamepad1.left_bumper;
 
-            if (toggleStateIntake) {
+            // ----------------- INTAKE -----------------
+
+            if (gamepad1.y) {
                 robot.intake.setPower(-1);
             } else {
-                robot.intake.setPower(0);
+                if (gamepad1.left_bumper && !wasPressedIntake) {
+                    toggleStateIntake = !toggleStateIntake;
+                }
+                wasPressedIntake = gamepad1.left_bumper;
+
+                if (toggleStateIntake) {
+                    robot.intake.setPower(-0.8);
+                } else {
+                    robot.intake.setPower(0);
+                }
+
+                if (gamepad1.dpad_left) {
+                    robot.intake.setPower(-0.6);
+                }
+
+                // Reverse override
+                if (gamepad1.dpad_right) {
+                    robot.intake.setPower(0.8);
+                }
+
+                // B-button intake sequence
+                if (gamepad1.b && !wasPressedB) {
+                    robot.intake.setPower(0.5);
+                    sleep(300);
+
+                    robot.intake.setPower(-1);
+                    sleep(400);
+
+                    if (toggleStateIntake) {
+                        robot.intake.setPower(-0.5);
+                    } else {
+                        robot.intake.setPower(0);
+                    }
+                }
+
+                wasPressedB = gamepad1.b;
+
+                if (gamepad1.a && !wasPressedA) {
+                    robot.intake.setPower(0.5);
+                    sleep(220);
+
+                    robot.intake.setPower(-1);
+                    sleep(300);
+
+                    if (toggleStateIntake) {
+                        robot.intake.setPower(-0.5);
+                    } else {
+                        robot.intake.setPower(0);
+                    }
+                }
+                wasPressedA = gamepad1.a;
             }
-
-            if (gamepad1.dpad_right){
-                robot.intake.setPower(1);
-            };
-
             // ----------------- DRIVETRAIN -----------------
             double y = gamepad1.right_stick_y;
-            double x = gamepad1.right_stick_x * 1.1;
+            double x = -gamepad1.right_stick_x * 1.1;
             double rx = -gamepad1.left_stick_x;
 
-            // Flip controls while intake toggle is ON
-            boolean controlsFlipped = toggleStateIntake;
-            if (controlsFlipped) {
-                y = y;    // forward/back
-                x = x;    // strafing
-                rx = rx;  // rotation
-            }
-
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-            double frontLeftPower  = (y - x + rx) / denominator;
-            double backLeftPower   = (y + x + rx) / denominator;
+
+            double frontLeftPower  = (y + x + rx) / denominator;
+            double backLeftPower   = (y - x + rx) / denominator;
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower  = (y + x - rx) / denominator;
 
@@ -95,15 +133,17 @@ public class Teleop extends LinearOpMode {
             robot.frontRightDrive.setPower(frontRightPower * driveSpeed);
             robot.backRightDrive.setPower(backRightPower * driveSpeed);
 
-            // ----------------- SHOOTER SPEED ADJUST -----------------
+            // ----------------- SHOOTER RPM ADJUST -----------------
             if (gamepad1.dpad_up && !prevDpadUp) {
                 shooterRPM += 10;
-                if (shooterRPM > maxShooterRPM) shooterRPM = maxShooterRPM;
+                shooterRPM = Math.min(shooterRPM, maxShooterRPM);
             }
+
             if (gamepad1.dpad_down && !prevDpadDown) {
                 shooterRPM -= 10;
-                if (shooterRPM < minShooterRPM) shooterRPM = minShooterRPM;
+                shooterRPM = Math.max(shooterRPM, minShooterRPM);
             }
+
             prevDpadUp = gamepad1.dpad_up;
             prevDpadDown = gamepad1.dpad_down;
 
@@ -114,7 +154,7 @@ public class Teleop extends LinearOpMode {
             wasPressedFlywheel = gamepad1.right_bumper;
 
             double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
-            if (motorRPM > MOTOR_MAX_RPM) motorRPM = MOTOR_MAX_RPM;
+            motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
 
             double targetTicksPerSec = motorRPM * MOTOR_TICKS_PER_REV / 60.0;
 
@@ -126,40 +166,16 @@ public class Teleop extends LinearOpMode {
                 flywheelTwo.setVelocity(0);
             }
 
-            // ----------------- FEED SERVO -----------------
-            if (gamepad1.x) {
-                robot.feedServo.setPosition(0);
-            } else {
-                robot.feedServo.setPosition(1);
-            }
-
             // ----------------- TELEMETRY -----------------
-
-            telemetry.addData("Intake Toggle (Controls Flipped)", toggleStateIntake ? "ON" : "OFF");
-
-
-            double fly1_tps = flywheelOne.getVelocity();
-            double fly2_tps = flywheelTwo.getVelocity();
-
-            double fly1_motorRPM = fly1_tps * 60.0 / MOTOR_TICKS_PER_REV;
-            double fly2_motorRPM = fly2_tps * 60.0 / MOTOR_TICKS_PER_REV;
-
-            double fly1_shooterRPM = fly1_motorRPM * SHOOTER_TO_MOTOR_RATIO;
-            double fly2_shooterRPM = fly2_motorRPM * SHOOTER_TO_MOTOR_RATIO;
+            telemetry.addData("Intake Toggle", toggleStateIntake ? "ON" : "OFF");
+            telemetry.addData("Flywheel Toggle", toggleStateFlywheel ? "ON" : "OFF");
 
             telemetry.addData("Target Shooter RPM", shooterRPM);
             telemetry.addData("Target Motor RPM", motorRPM);
-            telemetry.addData("Target tps", targetTicksPerSec);
+            telemetry.addData("Target TPS", targetTicksPerSec);
 
-            telemetry.addData("Motor1 RPM", fly1_motorRPM);
-            telemetry.addData("Motor2 RPM", fly2_motorRPM);
-            telemetry.addData("Shooter1 RPM (est)", fly1_shooterRPM);
-            telemetry.addData("Shooter2 RPM (est)", fly2_shooterRPM);
-
-            telemetry.addData("Fly1 tps", fly1_tps);
-            telemetry.addData("Fly2 tps", fly2_tps);
-            telemetry.addData("Fly1 pos", flywheelOne.getCurrentPosition());
-            telemetry.addData("Fly2 pos", flywheelTwo.getCurrentPosition());
+            telemetry.addData("Fly1 TPS", flywheelOne.getVelocity());
+            telemetry.addData("Fly2 TPS", flywheelTwo.getVelocity());
 
             telemetry.update();
         }

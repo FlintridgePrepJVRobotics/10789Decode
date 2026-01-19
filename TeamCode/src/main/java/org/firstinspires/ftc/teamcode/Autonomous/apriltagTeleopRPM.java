@@ -177,11 +177,11 @@ public class apriltagTeleopRPM extends LinearOpMode {
             }
 
             // Feed servo: left bumper activates feed when shooter is ON
-            if (gamepad1.left_bumper && shooterOn) {
-                robot.feedServo.setPosition(1.0); // adjust positions to your configuration
-            } else {
-                robot.feedServo.setPosition(0.0);
-            }
+//            if (gamepad1.left_bumper && shooterOn) {
+//                robot.feedServo.setPosition(1.0); // adjust positions to your configuration
+//            } else {
+//                robot.feedServo.setPosition(0.0);
+//            }
 
             // Telemetry: report mode, rpm selection, shooter state, and tag info
             telemetry.addData("Mode", autoAlignMode ? "AUTO-ALIGN (A held)" : "MANUAL");

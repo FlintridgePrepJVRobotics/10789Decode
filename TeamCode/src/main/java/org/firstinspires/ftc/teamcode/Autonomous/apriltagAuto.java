@@ -62,7 +62,7 @@ public class apriltagAuto extends LinearOpMode {
             /// /write code here do some movement shit ^^^
             aim();
             spoolFlywheel();
-            fire();
+//            fire();
             setFlywheel(0);
 
         }
@@ -91,11 +91,11 @@ public class apriltagAuto extends LinearOpMode {
         }
     }
 
-    public void fire(){
-        robot.feedServo.setPosition(1);
-        sleep(500);
-        robot.feedServo.setPosition(0);
-    }
+//    public void fire(){
+//        robot.feedServo.setPosition(1);
+//        sleep(500);
+//        robot.feedServo.setPosition(0);
+//    }
 
     /**
      * Drives the robot using PID control to correct for errors.

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
@@ -10,6 +11,11 @@ import org.firstinspires.ftc.teamcode.HWMap;
 public class encoders extends LinearOpMode {
 
     public HWMap robot = new HWMap();
+
+    // ===== SHOOTER CONSTANTS (same as TeleOp) =====
+    private static final double MOTOR_TICKS_PER_REV = 560.0;
+    private static final double MOTOR_MAX_RPM = 300.0;
+    private static final double SHOOTER_TO_MOTOR_RATIO = 4.0;
 
     public void encoderDrive ( double speed,
                                double fRightCounts, double fLeftCounts,
@@ -56,6 +62,20 @@ public class encoders extends LinearOpMode {
         // Initialize hardware
         robot.init(hardwareMap);
 
+        DcMotorEx flywheelOne = (DcMotorEx) robot.flywheelOne;
+        DcMotorEx flywheelTwo = (DcMotorEx) robot.flywheelTwo;
+
+        // Shooter encoder setup
+        flywheelOne.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        flywheelTwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        flywheelOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        flywheelTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Same PIDF as TeleOp
+        flywheelOne.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
+        flywheelTwo.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
+
         // Reset encoders
         robot.frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -73,14 +93,65 @@ public class encoders extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        // EXAMPLE MOVE:
-        // NOTE: Your method order is (fRight, fLeft, bRight, bLeft).
-        // If you want all wheels same direction, keep the signs the same:
+        encoderDrive(0.5, 2000, 2000, 2000, 2000);
+        // ================= SPIN UP SHOOTER =================
+        double shooterRPM = 290;
 
-        // Small pause so you can read end telemetry
+        double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
+        motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
+
+        double targetTicksPerSec =
+                motorRPM * MOTOR_TICKS_PER_REV / 60.0;
+
+        flywheelOne.setVelocity(targetTicksPerSec);
+        flywheelTwo.setVelocity(targetTicksPerSec);
+
+        sleep(1200); // initial spin-up
+
+        // ================= SHOOT 3x =================
+
+        robot.intake.setPower(0.4);
+        sleep(300);
+        robot.intake.setPower(0);
+        sleep(4000);
+
+        robot.intake.setPower(-0.8);
+        sleep(50);
+        robot.intake.setPower(0);
+        sleep(1000);
+        robot.intake.setPower(-0.8);
+        sleep(100);
+        robot.intake.setPower(0);
+
+        sleep(4000);
+
+        robot.intake.setPower(0.5);
+        sleep(200);
+        robot.intake.setPower(-0.8);
+        sleep(200);
+        robot.intake.setPower(0);
+
+        sleep(4000);
+
+        robot.intake.setPower(0.5);
+        sleep(230);
+        robot.intake.setPower(-1);
+        sleep(300);
+        robot.intake.setPower(0);
+
+        sleep(4000);
+
+        robot.intake.setPower(0.5);
+        sleep(300);
+        robot.intake.setPower(-1);
+        sleep(330);
+        robot.intake.setPower(0);
+
+        // ================= SHUT DOWN =================
+        flywheelOne.setVelocity(0);
+        flywheelTwo.setVelocity(0);
 
 
-        encoderDrive(0.2, -1000, -1000, -1000, -1000);
 
         /**
          * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)

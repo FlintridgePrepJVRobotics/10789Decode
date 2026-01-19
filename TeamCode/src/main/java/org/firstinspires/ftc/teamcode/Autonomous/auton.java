@@ -57,31 +57,44 @@ public class auton extends LinearOpMode {
 
         sleep(1200); // initial spin-up
 
-        // ================= SHOOT 3 RINGS =================
-        for (int i = 0; i < 4; i++) {
+        // ================= SHOOT 3x =================
 
-            sleep(2500);
+        robot.intake.setPower(0.4);
+        sleep(300);
+        robot.intake.setPower(0);
+        sleep(4000);
 
-            // Feed ring into shooter
-            robot.feedServo.setPosition(0);
-            sleep(2000);// slow servo push
+        robot.intake.setPower(-0.8);
+        sleep(50);
+        robot.intake.setPower(0);
+        sleep(1000);
+        robot.intake.setPower(-0.8);
+        sleep(100);
+        robot.intake.setPower(0);
 
-            // Run intake to load ring
-            robot.intake.setPower(-0.85);
+        sleep(4000);
 
+        robot.intake.setPower(0.5);
+        sleep(200);
+        robot.intake.setPower(-0.8);
+        sleep(200);
+        robot.intake.setPower(0);
 
-            robot.feedServo.setPosition(1);
-            sleep(1600);
+        sleep(4000);
 
+        robot.intake.setPower(0.5);
+        sleep(200);
+        robot.intake.setPower(-0.8);
+        sleep(200);
+        robot.intake.setPower(0);
 
+        sleep(4000);
 
-            sleep(500);          // intake time to move ring up
-            robot.intake.setPower(0);
-
-        }
+        robot.intake.setPower(-1);
+        sleep(200);
+        robot.intake.setPower(0);
 
         // ================= SHUT DOWN =================
-        robot.intake.setPower(0);
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
 
