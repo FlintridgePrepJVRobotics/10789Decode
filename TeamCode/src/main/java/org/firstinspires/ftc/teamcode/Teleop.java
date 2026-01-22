@@ -60,62 +60,40 @@ public class Teleop extends LinearOpMode {
         while (opModeIsActive()) {
 
             // ----------------- INTAKE -----------------
-
-            if (gamepad1.y) {
-                robot.intake.setPower(-1);
+            if (gamepad1.a) {
+                robot.intake.setPower(1);
             } else {
-                if (gamepad1.left_bumper && !wasPressedIntake) {
-                    toggleStateIntake = !toggleStateIntake;
-                }
-                wasPressedIntake = gamepad1.left_bumper;
-
-                if (toggleStateIntake) {
-                    robot.intake.setPower(-0.8);
+                if (gamepad1.b) {
+                    robot.intake.setPower(-1);
                 } else {
-                    robot.intake.setPower(0);
-                }
-
-                if (gamepad1.dpad_left) {
-                    robot.intake.setPower(-0.6);
-                }
-
-                // Reverse override
-                if (gamepad1.dpad_right) {
-                    robot.intake.setPower(0.8);
-                }
-
-                // B-button intake sequence
-                if (gamepad1.b && !wasPressedB) {
-                    robot.intake.setPower(0.5);
-                    sleep(300);
-
-                    robot.intake.setPower(-1);
-                    sleep(400);
+                    if (gamepad1.left_bumper && !wasPressedIntake) {
+                        toggleStateIntake = !toggleStateIntake;
+                    }
+                    wasPressedIntake = gamepad1.left_bumper;
 
                     if (toggleStateIntake) {
-                        robot.intake.setPower(-0.5);
+                        robot.intake.setPower(-0.6);
                     } else {
                         robot.intake.setPower(0);
                     }
+
+//                    if (gamepad1.a && !wasPressedA) {
+//                        robot.intake.setPower(0.5);
+//                        sleep(220);
+//
+//                        robot.intake.setPower(-1);
+//                        sleep(300);
+//
+//                        if (toggleStateIntake) {
+//                            robot.intake.setPower(-0.5);
+//                        } else {
+//                            robot.intake.setPower(0);
+//                        }
+//                    }
+//                    wasPressedA = gamepad1.a;
                 }
-
-                wasPressedB = gamepad1.b;
-
-                if (gamepad1.a && !wasPressedA) {
-                    robot.intake.setPower(0.5);
-                    sleep(220);
-
-                    robot.intake.setPower(-1);
-                    sleep(300);
-
-                    if (toggleStateIntake) {
-                        robot.intake.setPower(-0.5);
-                    } else {
-                        robot.intake.setPower(0);
-                    }
-                }
-                wasPressedA = gamepad1.a;
             }
+
             // ----------------- DRIVETRAIN -----------------
             double y = gamepad1.right_stick_y;
             double x = -gamepad1.right_stick_x * 1.1;
