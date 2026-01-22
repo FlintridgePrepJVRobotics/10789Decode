@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-@Autonomous(name="encoders")
+@Autonomous(name="closeautonomouss")
 public class encoders extends LinearOpMode {
 
     public HWMap robot = new HWMap();
@@ -93,7 +93,7 @@ public class encoders extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        encoderDrive(0.5, 2000, 2000, 2000, 2000);
+        encoderDrive(0.5, 1800, 1800, 1800, 1800);
         // ================= SPIN UP SHOOTER =================
         double shooterRPM = 290;
 
