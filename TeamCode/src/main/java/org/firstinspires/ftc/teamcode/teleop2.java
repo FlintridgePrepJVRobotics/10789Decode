@@ -76,7 +76,21 @@ public class teleop2 extends LinearOpMode {
 
             if (gamepad1.dpad_right){
                 robot.intake.setPower(1);
-            };
+            }
+            //                    if (gamepad1.a && !wasPressedA) {
+//                        robot.intake.setPower(0.5);
+//                        sleep(220);
+//
+//                        robot.intake.setPower(-1);
+//                        sleep(300);
+//
+//                        if (toggleStateIntake) {
+//                            robot.intake.setPower(-0.5);
+//                        } else {
+//                            robot.intake.setPower(0);
+//                        }
+//                    }
+//                    wasPressedA = gamepad1.a;
 
             // ----------------- DRIVETRAIN -----------------
             double y = gamepad1.right_stick_y;
