@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class HWMap {
     public DcMotor frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive;
     public DcMotorEx flywheelOne, flywheelTwo;
-    public DcMotor intake;
+    public DcMotor intake, outtake;
     private DcMotor[] drivemotors;
 
     public void init(HardwareMap hwMap) {
@@ -21,6 +21,7 @@ public class HWMap {
         flywheelOne     = hwMap.get(DcMotorEx.class, "flywheelOne");
         flywheelTwo     = hwMap.get(DcMotorEx.class, "flywheelTwo");
         intake          = hwMap.get(DcMotor.class, "intake");
+        outtake         = hwMap.get(DcMotor.class, "outtake");
 
         //fl = 0
         //fr = 1
