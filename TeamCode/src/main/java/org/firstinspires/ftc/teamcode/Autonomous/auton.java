@@ -60,39 +60,32 @@ public class auton extends LinearOpMode {
         // ================= SHOOT 3x =================
 
         robot.intake.setPower(0.4);
+        robot.outtake.setPower(0.4);
         sleep(300);
         robot.intake.setPower(0);
+        robot.outtake.setPower(0);
         sleep(4000);
 
         robot.intake.setPower(-0.8);
-        sleep(50);
-        robot.intake.setPower(0);
-        sleep(1000);
-        robot.intake.setPower(-0.8);
+        robot.outtake.setPower(-0.8);
         sleep(100);
-        robot.intake.setPower(0);
-
-        sleep(4000);
-
         robot.intake.setPower(0.5);
-        sleep(200);
-        robot.intake.setPower(-0.8);
-        sleep(200);
+        robot.outtake.setPower(0.5);
+        sleep(1000);
         robot.intake.setPower(0);
+        robot.outtake.setPower(0);
+        sleep(3000);
+        robot.intake.setPower(-0.8);
+        robot.outtake.setPower(-0.8);
+        sleep(100);
+        robot.intake.setPower(0.8);
+        robot.outtake.setPower(0.8);
+        sleep(1000);
+        robot.intake.setPower(0);
+        robot.outtake.setPower(0);
 
         sleep(4000);
 
-        robot.intake.setPower(0.5);
-        sleep(200);
-        robot.intake.setPower(-0.8);
-        sleep(200);
-        robot.intake.setPower(0);
-
-        sleep(4000);
-
-        robot.intake.setPower(-1);
-        sleep(200);
-        robot.intake.setPower(0);
 
         // ================= SHUT DOWN =================
         flywheelOne.setVelocity(0);
