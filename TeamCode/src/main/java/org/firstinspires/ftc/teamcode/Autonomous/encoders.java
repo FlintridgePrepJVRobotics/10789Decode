@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-@Autonomous(name="closeautonomouss")
+@Autonomous(name="Real close auton")
 public class encoders extends LinearOpMode {
 
     public HWMap robot = new HWMap();
@@ -93,9 +93,9 @@ public class encoders extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        encoderDrive(0.5, 1800, 1800, 1800, 1800);
+        encoderDrive(0.5, 1900, 1900, 1900, 1900);
         // ================= SPIN UP SHOOTER =================
-        double shooterRPM = 290;
+        double shooterRPM = 310;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
@@ -106,46 +106,42 @@ public class encoders extends LinearOpMode {
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
 
-        sleep(1200); // initial spin-up
+        sleep(3000); // initial spin-up
 
         // ================= SHOOT 3x =================
 
-        robot.intake.setPower(0.4);
-        sleep(300);
-        robot.intake.setPower(0);
-        sleep(4000);
-
-        robot.intake.setPower(-0.8);
-        sleep(50);
-        robot.intake.setPower(0);
-        sleep(1000);
-        robot.intake.setPower(-0.8);
+        ;
+        robot.outtake.setPower(1);
         sleep(100);
+        robot.outtake.setPower(0);
+
+
+        sleep(2000);
+        robot.intake.setPower(0.8);
+        sleep(250);
+        robot.intake.setPower(0);
+        robot.outtake.setPower(1);
+        sleep(250);
+        robot.outtake.setPower(0);
+
+        sleep(2000);
+        robot.intake.setPower(-0.5);
+        sleep(100);
+        robot.intake.setPower(0.8);
+        robot.outtake.setPower(1);
+        sleep(250);
+        robot.outtake.setPower(0);
         robot.intake.setPower(0);
 
-        sleep(4000);
-
-        robot.intake.setPower(0.5);
-        sleep(200);
-        robot.intake.setPower(-0.8);
-        sleep(200);
+        sleep(2000);
+        robot.intake.setPower(-0.5);
+        sleep(100);
+        robot.intake.setPower(0.8);
+        robot.outtake.setPower(1);
+        sleep(250);
+        robot.outtake.setPower(0);
         robot.intake.setPower(0);
 
-        sleep(4000);
-
-        robot.intake.setPower(0.5);
-        sleep(230);
-        robot.intake.setPower(-1);
-        sleep(300);
-        robot.intake.setPower(0);
-
-        sleep(4000);
-
-        robot.intake.setPower(0.5);
-        sleep(300);
-        robot.intake.setPower(-1);
-        sleep(330);
-        robot.intake.setPower(0);
 
         // ================= SHUT DOWN =================
         flywheelOne.setVelocity(0);
