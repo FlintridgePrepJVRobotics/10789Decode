@@ -64,8 +64,9 @@ public class auton extends LinearOpMode {
         sleep(300);
         robot.intake.setPower(0);
         robot.outtake.setPower(0);
-        sleep(4000);
-
+        flywheelOne.setVelocity(0);
+        flywheelTwo.setVelocity(0);
+        sleep(3000);
         robot.intake.setPower(-0.8);
         robot.outtake.setPower(-0.8);
         sleep(100);
@@ -74,17 +75,28 @@ public class auton extends LinearOpMode {
         sleep(1000);
         robot.intake.setPower(0);
         robot.outtake.setPower(0);
+        sleep(100);
+
+        flywheelOne.setVelocity(targetTicksPerSec);
+        flywheelTwo.setVelocity(targetTicksPerSec);
+        sleep(1200);
+        robot.intake.setPower(0.4);
+        robot.outtake.setPower(0.4);
+        sleep(300);
+        robot.intake.setPower(0);
+        robot.outtake.setPower(0);
+        flywheelOne.setVelocity(0);
+        flywheelTwo.setVelocity(0);
         sleep(3000);
         robot.intake.setPower(-0.8);
         robot.outtake.setPower(-0.8);
         sleep(100);
-        robot.intake.setPower(0.8);
-        robot.outtake.setPower(0.8);
+        robot.intake.setPower(0.5);
+        robot.outtake.setPower(0.5);
         sleep(1000);
         robot.intake.setPower(0);
         robot.outtake.setPower(0);
-
-        sleep(4000);
+        sleep(100);
 
 
         // ================= SHUT DOWN =================
