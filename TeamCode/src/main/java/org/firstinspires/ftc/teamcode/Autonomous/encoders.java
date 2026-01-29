@@ -93,13 +93,12 @@ public class encoders extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        encoderDrive(0.5, 1900, 1900, 1900, 1900);
+        encoderDrive(0.5, 1950, 1940, 1950, 1940);
         // ================= SPIN UP SHOOTER =================
-        double shooterRPM = 310;
+        double shooterRPM = 305;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
-
         double targetTicksPerSec =
                 motorRPM * MOTOR_TICKS_PER_REV / 60.0;
 

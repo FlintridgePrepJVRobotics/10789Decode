@@ -1,17 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import org.firstinspires.ftc.teamcode.HWMap;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-
-@Autonomous(name = "SHootinplace")
+@Autonomous(name="SHOOTINPLACE")
 public class auton extends LinearOpMode {
 
     public HWMap robot = new HWMap();
@@ -21,9 +17,49 @@ public class auton extends LinearOpMode {
     private static final double MOTOR_MAX_RPM = 300.0;
     private static final double SHOOTER_TO_MOTOR_RATIO = 4.0;
 
-    @Override
-    public void runOpMode() {
+    public void encoderDrive ( double speed,
+                               double fRightCounts, double fLeftCounts,
+                               double bRightCounts, double bLeftCounts){
 
+        int newfLeftTarget = robot.frontLeftDrive.getCurrentPosition();
+        int newfRightTarget = robot.frontRightDrive.getCurrentPosition();
+        int newbLeftTarget = robot.backLeftDrive.getCurrentPosition();
+        int newbRightTarget = robot.backRightDrive.getCurrentPosition();
+
+        robot.frontLeftDrive.setTargetPosition((int)newfLeftTarget + (int)fLeftCounts);
+        robot.frontRightDrive.setTargetPosition((int)newfRightTarget + (int)fRightCounts);
+        robot.backLeftDrive.setTargetPosition((int)newbLeftTarget + (int)bLeftCounts);
+        robot.backRightDrive.setTargetPosition((int)newbRightTarget + (int)bRightCounts);
+
+        double p = Math.abs(speed);
+        robot.frontLeftDrive.setPower(p);
+        robot.frontRightDrive.setPower(p);
+        robot.backLeftDrive.setPower(p);
+        robot.backRightDrive.setPower(p);
+
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (robot.backRightDrive.isBusy() && robot.backLeftDrive.isBusy() && robot.frontRightDrive.isBusy() && robot.frontLeftDrive.isBusy()){
+
+        }
+        robot.frontLeftDrive.setPower(0);
+        robot.frontRightDrive.setPower(0);
+        robot.backLeftDrive.setPower(0);
+        robot.backRightDrive.setPower(0);
+
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        // Initialize hardware
         robot.init(hardwareMap);
 
         DcMotorEx flywheelOne = (DcMotorEx) robot.flywheelOne;
@@ -40,11 +76,24 @@ public class auton extends LinearOpMode {
         flywheelOne.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
         flywheelTwo.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
 
-        waitForStart();
-        if (!opModeIsActive()) return;
+        // Reset encoders
+        robot.frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        // Optional: show starting encoder values
+        telemetry.addData("Start", "FL:%d FR:%d BL:%d BR:%d",
+                robot.frontLeftDrive.getCurrentPosition(),
+                robot.frontRightDrive.getCurrentPosition(),
+                robot.backLeftDrive.getCurrentPosition(),
+                robot.backRightDrive.getCurrentPosition());
+        telemetry.update();
+
+        waitForStart();
+        if (isStopRequested()) return;
         // ================= SPIN UP SHOOTER =================
-        double shooterRPM = 400;
+        double shooterRPM = 3306;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
@@ -55,167 +104,69 @@ public class auton extends LinearOpMode {
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
 
-        sleep(1200); // initial spin-up
+        sleep(5000); // initial spin-up
 
         // ================= SHOOT 3x =================
 
-        robot.intake.setPower(0.4);
-        robot.outtake.setPower(0.4);
-        sleep(300);
-        robot.intake.setPower(0);
-        robot.outtake.setPower(0);
-        flywheelOne.setVelocity(0);
-        flywheelTwo.setVelocity(0);
-        sleep(3000);
-        robot.intake.setPower(-0.8);
-        robot.outtake.setPower(-0.8);
+        ;
+        robot.outtake.setPower(1);
         sleep(100);
-        robot.intake.setPower(0.5);
-        robot.outtake.setPower(0.5);
-        sleep(1000);
-        robot.intake.setPower(0);
         robot.outtake.setPower(0);
-        sleep(100);
 
-        flywheelOne.setVelocity(targetTicksPerSec);
-        flywheelTwo.setVelocity(targetTicksPerSec);
-        sleep(1200);
-        robot.intake.setPower(0.4);
-        robot.outtake.setPower(0.4);
-        sleep(300);
+
+        sleep(2000);
+        robot.intake.setPower(0.8);
+        sleep(250);
         robot.intake.setPower(0);
+        robot.outtake.setPower(1);
+        sleep(250);
         robot.outtake.setPower(0);
-        flywheelOne.setVelocity(0);
-        flywheelTwo.setVelocity(0);
-        sleep(3000);
-        robot.intake.setPower(-0.8);
-        robot.outtake.setPower(-0.8);
+
+        sleep(2000);
+        robot.intake.setPower(-0.5);
         sleep(100);
-        robot.intake.setPower(0.5);
-        robot.outtake.setPower(0.5);
-        sleep(1000);
+        robot.intake.setPower(0.8);
+        robot.outtake.setPower(1);
+        sleep(250);
+        robot.outtake.setPower(0);
         robot.intake.setPower(0);
-        robot.outtake.setPower(0);
+
+        sleep(2000);
+        robot.intake.setPower(-0.5);
         sleep(100);
+        robot.intake.setPower(0.8);
+        robot.outtake.setPower(1);
+        sleep(250);
+        robot.outtake.setPower(0);
+        robot.intake.setPower(0);
 
 
         // ================= SHUT DOWN =================
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
 
+
+
+        /**
+         * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)
+         * Direction comes from the TARGET POSITION (encoder sign), since power is abs(speed).
+         */
+
+        // Use OR so telemetry keeps updating as long as ANY motor is still mo
+
+        // Go back to encoder mode
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Show final encoder values
+        telemetry.addData("Done", "FL:%d FR:%d BL:%d BR:%d",
+                robot.frontLeftDrive.getCurrentPosition(),
+                robot.frontRightDrive.getCurrentPosition(),
+                robot.backLeftDrive.getCurrentPosition(),
+                robot.backRightDrive.getCurrentPosition());
+        telemetry.update();
     }
+
 }
-//package org.firstinspires.ftc.teamcode.Autonomous;
-//
-//import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//
-//import org.firstinspires.ftc.teamcode.HWMap;
-//
-////name that appeafrss on the driver hub screen
-//@Autonomous(name = "shootinplace")
-//public class auton extends LinearOpMode {
-//    //making a robot from project file (hardware map)
-//    public HWMap robot = new HWMap();
-//    double power = 950;
-//    @Override
-//    public void runOpMode() throws InterruptedException {
-//        //initialize hardware map
-//        robot.init(hardwareMap);// start block
-//        waitForStart();
-//        robot.flywheelOne.setVelocity(power);
-//        robot.flywheelTwo.setVelocity(power);
-//        sleep(3000);
-//        robot.feedServo.setPosition(0);//number 1
-//        sleep(2000);
-//        robot.feedServo.setPosition(1);
-//        robot.flywheelOne.setPower(0);
-//        robot.flywheelTwo.setPower(0);
-//        sleep(1000);
-//        robot.intake.setPower(0.5);
-//        sleep(250);
-//        robot.intake.setPower(-0.5);
-//        sleep(500);
-//        robot.intake.setPower(0);//end block
-//
-//
-//        robot.flywheelOne.setVelocity(power);
-//        robot.flywheelTwo.setVelocity(power);
-//        sleep(3000);
-//        robot.feedServo.setPosition(0);//number 1
-//        sleep(2000);
-//        robot.feedServo.setPosition(1);
-//        robot.flywheelOne.setPower(0);
-//        robot.flywheelTwo.setPower(0);
-//        sleep(1000);
-//        robot.intake.setPower(0.5);
-//        sleep(250);
-//        robot.intake.setPower(-1);
-//        sleep(500);
-//        robot.intake.setPower(0);//end block
-//
-//        robot.flywheelOne.setVelocity(power);
-//        robot.flywheelTwo.setVelocity(power);
-//        sleep(3000);
-//        robot.feedServo.setPosition(0);//number 1
-//        sleep(2000);
-//        robot.feedServo.setPosition(1);
-//        robot.flywheelOne.setPower(0);
-//        robot.flywheelTwo.setPower(0);
-//        sleep(1000);
-//        robot.intake.setPower(0.5);
-//        sleep(250);
-//        robot.intake.setPower(-1);
-//        sleep(500);
-//        robot.intake.setPower(0);//end blo ck
-//
-//
-//
-//
-//
-//
-////        forward(250,1);iyt
-////        sleep(500);
-////        forward(250,-1);
-////        robot.feedServo.setPosition(0);//number 2
-////        sleep(3000);
-////        robot.feedServo.setPosition(1);
-////        sleep(3000);
-////        robot.intake.setPower(0.5);
-////        sleep(250);
-////        robot.intake.setPower(-1);
-////        sleep(2000);
-////        forward(250,1); out
-////        sleep(500);
-////        forward(250,-1);
-////        robot.intake.setPower(-0);
-////        sleep(1000);
-////        robot.feedServo.setPosition(0);//number 3
-////        sleep(2000);
-////        robot.flywheelOne.setPower(0);
-////        robot.flywheelTwo.setPower(0);
-////        robot.feedServo.setPosition(0);
-//        robot.backRightDrive.setPower(-0.7);
-//        robot.backLeftDrive.setPower(-0.7);
-//        robot.frontRightDrive.setPower(-0.7);
-//        robot.frontLeftDrive.setPower(-0.7);
-//        sleep(4000);
-//        stopall();
-//    }
-//
-//    public void forward(int time, double speed) { //forward
-//        robot.backRightDrive.setPower(speed);
-//        robot.backLeftDrive.setPower(speed);
-//        robot.frontRightDrive.setPower(speed);
-//        robot.frontLeftDrive.setPower(speed);
-//        sleep(time);
-//        stopall();
-//    }
-//    public void stopall() { //forward
-//        robot.backRightDrive.setPower(0);
-//        robot.backLeftDrive.setPower(0);
-//        robot.frontRightDrive.setPower(0);
-//        robot.frontLeftDrive.setPower(0);
-//    }
-//
-//}
