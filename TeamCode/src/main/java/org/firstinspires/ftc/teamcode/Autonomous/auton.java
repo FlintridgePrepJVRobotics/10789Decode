@@ -93,7 +93,7 @@ public class auton extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
         // ================= SPIN UP SHOOTER =================
-        double shooterRPM = 3306;
+        double shooterRPM = 330;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
