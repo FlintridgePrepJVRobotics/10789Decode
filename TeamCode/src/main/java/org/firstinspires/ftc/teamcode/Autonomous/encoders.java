@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-@Autonomous(name="Real close auton")
+@Autonomous(name="Real close auton blue")
 public class encoders extends LinearOpMode {
 
     public HWMap robot = new HWMap();
