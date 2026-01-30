@@ -146,7 +146,8 @@ public class encoders extends LinearOpMode {
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
 
-
+        encoderDrive(0.5, 1950, 1940, 1950, 1940);
+        encoderDrive(0.2, 1950, -1940, 1950, -1940);
 
         /**
          * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)
