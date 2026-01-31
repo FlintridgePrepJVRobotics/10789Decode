@@ -60,25 +60,29 @@ public class Teleop extends LinearOpMode {
         while (opModeIsActive()) {
 
             // ----------------- INTAKE -----------------
-            if (gamepad1.a) {
-                robot.intake.setPower(-0.8);
-                robot.outtake.setPower(-1);
+            if (gamepad1.y) {
+                robot.outtake.setPower(1);
             } else {
-                if (gamepad1.b) {
-                    robot.intake.setPower(0.8);
-                    robot.outtake.setPower(1);
+                if (gamepad1.a) {
+                    robot.intake.setPower(-0.8);
+                    robot.outtake.setPower(-1);
                 } else {
-                    if (gamepad1.left_bumper && !wasPressedIntake) {
-                        toggleStateIntake = !toggleStateIntake;
-                    }
-                    wasPressedIntake = gamepad1.left_bumper;
-
-                    if (toggleStateIntake) {
+                    if (gamepad1.b) {
                         robot.intake.setPower(0.8);
-                        robot.outtake.setPower(0);
+                        robot.outtake.setPower(1);
                     } else {
-                        robot.intake.setPower(0);
-                        robot.outtake.setPower(0);
+                        if (gamepad1.left_bumper && !wasPressedIntake) {
+                            toggleStateIntake = !toggleStateIntake;
+                        }
+                        wasPressedIntake = gamepad1.left_bumper;
+
+                        if (toggleStateIntake) {
+                            robot.intake.setPower(0.8);
+                            robot.outtake.setPower(0.4);
+                        } else {
+                            robot.intake.setPower(0);
+                            robot.outtake.setPower(0);
+                        }
                     }
                 }
             }

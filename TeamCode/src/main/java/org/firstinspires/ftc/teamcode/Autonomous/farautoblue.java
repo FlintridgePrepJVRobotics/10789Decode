@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-@Autonomous(name="Real Close Auto Blue")
-public class closeautoblue extends LinearOpMode {
+@Autonomous(name="fake far Auto Blue")
+public class farautoblue extends LinearOpMode {
 
     public HWMap robot = new HWMap();
 
@@ -93,81 +93,21 @@ public class closeautoblue extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        double shooterRPM = 295;
+        // ================= SPIN UP SHOOTER =================
+        double shooterRPM = 305;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
         double targetTicksPerSec =
                 motorRPM * MOTOR_TICKS_PER_REV / 60.0;
 
-
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
 
-        encoderDrive(0.8, 2100, 2100, 2100, 2100);
-        // ================= SPIN UP SHOOTER =================
+        encoderDrive(0.5,-3750,-3750,-3750,-3750);
+        encoderDrive(0.5,-500,500,-500,500);
 
-
-        sleep(3500); // initial spin-up
-
-        // ================= SHOOT 3x =================
-
-        ;
-        robot.outtake.setPower(1);
-        sleep(100);
-        robot.outtake.setPower(0);
-
-
-        sleep(1000);
-        robot.intake.setPower(0.8);
-        sleep(250);
-        robot.intake.setPower(0);
-        robot.outtake.setPower(1);
-        sleep(250);
-        robot.outtake.setPower(0);
-
-        sleep(1000);
-        robot.intake.setPower(-0.5);
-        sleep(100);
-        robot.intake.setPower(0.8);
-        robot.outtake.setPower(1);
-        sleep(250);
-        robot.outtake.setPower(0);
-        robot.intake.setPower(0);
-
-        sleep(1000);
-        robot.intake.setPower(-0.5);
-        sleep(100);
-        robot.intake.setPower(0.8);
-        robot.outtake.setPower(1);
-        sleep(250);
-        robot.outtake.setPower(0);
-        robot.intake.setPower(0);
-
-
-        // ================= SHUT DOWN =================
-        flywheelOne.setVelocity(0);
-        flywheelTwo.setVelocity(0);
-//dfghjkdfghjkdfghj
-        encoderDrive(0.7, 500, -500, 500, -500);
-        encoderDrive(0.8, 400,400,400,400);
-        encoderDrive(0.8, 1000,-1000,1000,-1000);
-
-        robot.intake.setPower(0.8);
-        encoderDrive(0.4, 2400,2400,2400,2400);
-//        robot.intake.setPower(-0.8);
-//        sleep(100);
-        robot.intake.setPower(0);
-        sleep(800);
-
-
-        encoderDrive(0.5,-1700,-1700,-1700,-1700);
-        encoderDrive(0.5,-1400,1400,-1400,1400);
-
-
-//shoot another 3 ................dfghkguretasfghilyyuaetsdfhi
-        flywheelOne.setVelocity(targetTicksPerSec);
-        flywheelTwo.setVelocity(targetTicksPerSec);
+//shoot another 3 ................dfghkguretasfghilyyuaetsdfhh
 
         sleep(3000); // initial spin-up
 
@@ -204,10 +144,6 @@ public class closeautoblue extends LinearOpMode {
         sleep(250);
         robot.outtake.setPower(0);
         robot.intake.setPower(0);
-
-        encoderDrive(1,500,-500,500,-500);
-        encoderDrive(1,600,600,600,600);
-
 
         /**
          * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)
