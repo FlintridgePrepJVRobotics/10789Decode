@@ -40,7 +40,7 @@ public class Teleop extends LinearOpMode {
 
         double driveSpeed = 1.0;
 
-        double shooterRPM = 340;
+        double shooterRPM = 300;
         double minShooterRPM = 100;
         double maxShooterRPM = 1200;
 

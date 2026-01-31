@@ -7,12 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-@Autonomous(name="Real Far Auto BLUE")
-public class farautoblue extends LinearOpMode {
+@Autonomous(name="Real Far Auto RED")
+public class farautored extends LinearOpMode {
 
     public HWMap robot = new HWMap();
 
-    // ===== SHOOTER CONSTANTS (same as TeleOp) =====
     private static final double MOTOR_TICKS_PER_REV = 560.0;
     private static final double MOTOR_MAX_RPM = 300.0;
     private static final double SHOOTER_TO_MOTOR_RATIO = 4.0;
@@ -42,9 +41,13 @@ public class farautoblue extends LinearOpMode {
         robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while (robot.backRightDrive.isBusy() && robot.backLeftDrive.isBusy() && robot.frontRightDrive.isBusy() && robot.frontLeftDrive.isBusy()){
-
+        while (opModeIsActive() &&
+                robot.frontLeftDrive.isBusy() &&
+                robot.frontRightDrive.isBusy() &&
+                robot.backLeftDrive.isBusy() &&
+                robot.backRightDrive.isBusy()) {
         }
+
         robot.frontLeftDrive.setPower(0);
         robot.frontRightDrive.setPower(0);
         robot.backLeftDrive.setPower(0);
@@ -59,30 +62,25 @@ public class farautoblue extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // Initialize hardware
         robot.init(hardwareMap);
 
         DcMotorEx flywheelOne = (DcMotorEx) robot.flywheelOne;
         DcMotorEx flywheelTwo = (DcMotorEx) robot.flywheelTwo;
 
-        // Shooter encoder setup
         flywheelOne.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         flywheelTwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         flywheelOne.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flywheelTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Same PIDF as TeleOp
         flywheelOne.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
         flywheelTwo.setVelocityPIDFCoefficients(10, 0.5, 0, 12);
 
-        // Reset encoders
         robot.frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        // Optional: show starting encoder values
         telemetry.addData("Start", "FL:%d FR:%d BL:%d BR:%d",
                 robot.frontLeftDrive.getCurrentPosition(),
                 robot.frontRightDrive.getCurrentPosition(),
@@ -93,7 +91,6 @@ public class farautoblue extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        // ================= SPIN UP SHOOTER =================
         double shooterRPM = 340;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
@@ -104,20 +101,21 @@ public class farautoblue extends LinearOpMode {
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
 
-        encoderDrive(0.3,-200,-200,-200,-200);
-        encoderDrive(0.3,-250,250,-250,250);
+        // ─────────────────────────────────────────────
+        //      MIRRORED MOVEMENTS FOR RED
+        // ─────────────────────────────────────────────
 
-//shoot another 3 ................dfghkguretasfghilyyuaetsdfhh
+        // Straight back (same)
+        encoderDrive(0.3, -200, -200, -200, -200);
 
-        sleep(2000); // initial spin-up
+        // Strafe/turn: FLIP LEFT-RIGHT signs
+        encoderDrive(0.3, 250, -250, 250, -250);
 
-        // ================= SHOOT 3x =================
+        sleep(2000);
 
-        ;
         robot.outtake.setPower(1);
         sleep(300);
         robot.outtake.setPower(0);
-
 
         sleep(3000);
         robot.intake.setPower(0.8);
@@ -139,33 +137,35 @@ public class farautoblue extends LinearOpMode {
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
 
-        encoderDrive(0.5,-1000,-1000,-1000,-1000);
+        // Straight (same)
+        encoderDrive(0.5, -1000, -1000, -1000, -1000);
 
-        encoderDrive(0.5,1150,-1150,1150,-1150);
+        // Turn: flip signs
+        encoderDrive(0.5, -1150, 1150, -1150, 1150);
 
         robot.intake.setPower(0.9);
-        encoderDrive(0.4,1900,1900,1900,1900);
+        // straight (same)
+        encoderDrive(0.4, 1900, 1900, 1900, 1900);
         sleep(100);
         robot.intake.setPower(0);
-        robot.outtake.setPower(0);
 
-        encoderDrive(0.5,-1550,-1550,-1550,-1550);
+        // straight (same)
+        encoderDrive(0.5, -1550, -1550, -1550, -1550);
 
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
-        encoderDrive(0.5,-1110,1110,-1110,1110);
-        encoderDrive(0.5,1000,1000,1000,1000);
 
+        // turn: flip
+        encoderDrive(0.5, 1110, -1110, 1110, -1110);
 
+        // straight (same)
+        encoderDrive(0.5, 1000, 1000, 1000, 1000);
 
-        sleep(2000); // initial spin-up
-
-        // ================= SHOOT 3x =================
+        sleep(2000);
 
         robot.outtake.setPower(1);
         sleep(300);
         robot.outtake.setPower(0);
-
 
         sleep(3000);
         robot.intake.setPower(0.8);
@@ -184,26 +184,12 @@ public class farautoblue extends LinearOpMode {
         robot.outtake.setPower(0);
         robot.intake.setPower(0);
 
+        // straight (same)
+        encoderDrive(0.5, -1000, -1000, -1000, -1000);
 
-        encoderDrive(0.5,-1000,-1000,-1000,-1000);
         flywheelOne.setVelocity(0);
         flywheelTwo.setVelocity(0);
 
-
-        /**
-         * encoderDrive(speed, fRightCounts, fLeftCounts, bRightCounts, bLeftCounts)
-         * Direction comes from the TARGET POSITION (encoder sign), since power is abs(speed).
-         */
-
-        // Use OR so telemetry keeps updating as long as ANY motor is still mo
-
-        // Go back to encoder mode
-        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Show final encoder values
         telemetry.addData("Done", "FL:%d FR:%d BL:%d BR:%d",
                 robot.frontLeftDrive.getCurrentPosition(),
                 robot.frontRightDrive.getCurrentPosition(),
@@ -211,5 +197,4 @@ public class farautoblue extends LinearOpMode {
                 robot.backRightDrive.getCurrentPosition());
         telemetry.update();
     }
-
 }

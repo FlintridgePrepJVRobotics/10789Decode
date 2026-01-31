@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.HWMap;
 
-@Autonomous(name="Real Close Auto Blue")
+@Autonomous(name="Real Close Auto BLUE")
 public class closeautoblue extends LinearOpMode {
 
     public HWMap robot = new HWMap();
@@ -93,7 +93,7 @@ public class closeautoblue extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        double shooterRPM = 295;
+        double shooterRPM = 290;
 
         double motorRPM = shooterRPM / SHOOTER_TO_MOTOR_RATIO;
         motorRPM = Math.min(motorRPM, MOTOR_MAX_RPM);
@@ -104,65 +104,64 @@ public class closeautoblue extends LinearOpMode {
         flywheelOne.setVelocity(targetTicksPerSec);
         flywheelTwo.setVelocity(targetTicksPerSec);
 
-        encoderDrive(0.8, 2100, 2100, 2100, 2100);
+        encoderDrive(0.8, 2000, 2000, 2000, 2000);
         // ================= SPIN UP SHOOTER =================
 
 
-        sleep(3500); // initial spin-up
+        sleep(3000); // initial spin-up
 
         // ================= SHOOT 3x =================
 
-        ;
         robot.outtake.setPower(1);
-        sleep(100);
+        sleep(300);
         robot.outtake.setPower(0);
 
 
-        sleep(1000);
+        sleep(2500);
         robot.intake.setPower(0.8);
         sleep(250);
         robot.intake.setPower(0);
-        robot.outtake.setPower(1);
-        sleep(250);
+        robot.outtake.setPower(0.8);
+        sleep(300);
         robot.outtake.setPower(0);
 
-        sleep(1000);
+
+        sleep(2500);
         robot.intake.setPower(-0.5);
         sleep(100);
         robot.intake.setPower(0.8);
         robot.outtake.setPower(1);
-        sleep(250);
+        sleep(300);
         robot.outtake.setPower(0);
         robot.intake.setPower(0);
 
-        sleep(1000);
-        robot.intake.setPower(-0.5);
-        sleep(100);
-        robot.intake.setPower(0.8);
-        robot.outtake.setPower(1);
-        sleep(250);
-        robot.outtake.setPower(0);
-        robot.intake.setPower(0);
+//        flywheelOne.setVelocity(0);
+//        flywheelTwo.setVelocity(0);
 
 
-        // ================= SHUT DOWN =================
-        flywheelOne.setVelocity(0);
-        flywheelTwo.setVelocity(0);
 //dfghjkdfghjkdfghj
-        encoderDrive(0.7, 500, -500, 500, -500);
+        encoderDrive(0.7, 540, -540, 540, -540);
         encoderDrive(0.8, 400,400,400,400);
         encoderDrive(0.8, 1000,-1000,1000,-1000);
 
-        robot.intake.setPower(0.8);
-        encoderDrive(0.4, 2400,2400,2400,2400);
-//        robot.intake.setPower(-0.8);
-//        sleep(100);
+        robot.intake.setPower(0.9);
+        encoderDrive(0.4,2000,2000,2000,2000);
+        sleep(200);
         robot.intake.setPower(0);
-        sleep(800);
+        robot.outtake.setPower(0);
 
 
-        encoderDrive(0.5,-1700,-1700,-1700,-1700);
-        encoderDrive(0.5,-1400,1400,-1400,1400);
+
+//        robot.intake.setPower(0.8);
+//        encoderDrive(0.4, 2400,2400,2400,2400);
+////        robot.outtake.setPower(0.8);
+////        sleep(100);
+//        robot.intake.setPower(0);
+//        sleep(800);
+
+
+        encoderDrive(0.8,-1700,-1700,-1700,-1700);
+        encoderDrive(0.6,-1400,1400,-1400,1400);
 
 
 //shoot another 3 ................dfghkguretasfghilyyuaetsdfhi
@@ -173,40 +172,30 @@ public class closeautoblue extends LinearOpMode {
 
         // ================= SHOOT 3x =================
 
-        ;
         robot.outtake.setPower(1);
         sleep(100);
         robot.outtake.setPower(0);
 
 
-        sleep(1400);
+        sleep(2500);
         robot.intake.setPower(0.8);
         sleep(250);
         robot.intake.setPower(0);
-        robot.outtake.setPower(1);
-        sleep(250);
+        robot.outtake.setPower(0.8);
+        sleep(300);
         robot.outtake.setPower(0);
 
-        sleep(1400);
+        sleep(2500);
         robot.intake.setPower(-0.5);
         sleep(100);
         robot.intake.setPower(0.8);
-        robot.outtake.setPower(1);
-        sleep(250);
+        robot.outtake.setPower(0.8);
+        sleep(300);
         robot.outtake.setPower(0);
         robot.intake.setPower(0);
 
-        sleep(1400);
-        robot.intake.setPower(-0.5);
-        sleep(100);
-        robot.intake.setPower(0.8);
-        robot.outtake.setPower(1);
-        sleep(250);
-        robot.outtake.setPower(0);
-        robot.intake.setPower(0);
-
-        encoderDrive(1,500,-500,500,-500);
-        encoderDrive(1,600,600,600,600);
+        encoderDrive(1,700,-700,700,-700);
+        encoderDrive(1,1200,1200,1200,1200);
 
 
         /**
